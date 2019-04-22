@@ -21,13 +21,16 @@
     </form>
 
     <div id="board">
-     
+        <% for (var x in users){ %>
+            <%= users[x] %>
+        <% } %>
+ 
     </div>
-  
+
     <script type="text/javascript">
         $(document).ready(function () {
             var socket = io.connect();
-            
+
             $('#login').submit(function (e) {
                 e.preventDefault();
                 name = $('#login input').val();
@@ -40,12 +43,16 @@
                 console.log('The server says your id is: ' + data.response);
                 id = data.response;
             });
-
-            socket.on('display_new_user', function (username) {
+            socket.on('connect_user', function (username) {
                 $('#login').fadeOut('fast', function () { $('#body').fadeIn('fast'); });
+            });
+            socket.on('display_update_users', function (username) {
                 $('#board').append("<p>" + username.response + " has connected.</p>");
             });
 
+            socket.on('disconnect_user', function (username) {
+                $('#board').append("<p>" + username.response + " has disconnected.</p>");
+            });
         })
     </script>
 
