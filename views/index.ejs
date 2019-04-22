@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Trvia Race</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+    <h1>Trivia Game</h1>
+    <form id="login">
+        <label for="name">
+            <b>Please enter your name:</b>
+        </label>
+        <input required type="text" name="name" value="Robert" />
+        <button for="login" type='submit'> ENTER GAME</button>
+    </form>
+
+    <div id="board">
+     
+    </div>
+  
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var socket = io.connect();
+            
+            $('#login').submit(function (e) {
+                e.preventDefault();
+                name = $('#login input').val();
+                socket.emit("new_user", {
+                    "name": name,
+                });
+            });
+
+            socket.on('connection_response', function (data) {
+                console.log('The server says your id is: ' + data.response);
+                id = data.response;
+            });
+
+            socket.on('display_new_user', function (username) {
+                $('#login').fadeOut('fast', function () { $('#body').fadeIn('fast'); });
+                $('#board').append("<p>" + username.response + " has connected.</p>");
+            });
+
+        })
+    </script>
+
+</body>
+
+</html>
