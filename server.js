@@ -4,7 +4,8 @@ var path = require("path");
 const app = express();
 app.engine("html", require("ejs").renderFile);
 app.use(express.static(__dirname + "/public"));
-var users = {};
+var users = [];
+var user = {};
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "./static")));
@@ -25,18 +26,30 @@ io.sockets.on('connection', function (socket) {
   console.log("Client/socket id is: ", socket.id);
   socket.emit('connection_response', { response: socket.id });
 
-  socket.on("new_user", function (user) {
-    users[socket.id] = user.name
+  socket.on("new_user", function (newuser) {
+    user = {
+      _id: socket.id,
+      name: newuser.name,
+      score: 0
+    }
+    users.push(user);
+    console.log(user)
+    user = {};
     console.log("user id" + socket.id)
     console.log(users)
-    socket.emit('connect_user', { response: user.name });
-    io.emit('display_update_users', { response: user.name });
+    socket.emit('connect_user', { response: newuser.name });
+    io.emit('display_update_users', { response: newuser.name });
   });
 
   socket.on("disconnect", function () {
-    name = users[socket.id]
-    console.log("User disconnected " + name)
-    delete users[socket.id];
+    var name;
+    console.log("this diconnect: " + socket.id)
+    for (let i = 0; i < users.length; i++) {
+      if (users[i]._id == socket.id) {
+        name = users[i].name
+        users.splice(i, 1);
+      }
+    }
     console.log(users)
     io.emit('disconnect_user', { response: name });
   });
