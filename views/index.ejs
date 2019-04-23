@@ -23,11 +23,29 @@
     <div id="board">
 
     </div>
+   
+
+    <div id="users">
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Action</th>
+            </tr>
+            <% for (var x in users) { %>
+            <tr id="username">
+                <%= users[x].name %>
+            </tr>
+            <tr id="action">
+                <button>Ready!</button>
+            </tr>
+            <% } %>
+        </table>
+    </div>
 
     <script type="text/javascript">
         $(document).ready(function () {
             var socket = io.connect();
-            
+
             $('#login').submit(function (e) {
                 e.preventDefault();
                 name = $('#login input').val();
@@ -41,7 +59,9 @@
                 id = data.response;
             });
             socket.on('connect_user', function (username) {
-                $('#login').fadeOut('fast', function () { $('#body').fadeIn('fast'); });
+                $('#login').fadeOut('fast', function () {
+                    $('#body').fadeIn('fast');
+                });
             });
             socket.on('display_update_users', function (username) {
                 $('#board').append("<p>" + username.response + " has connected.</p>");
