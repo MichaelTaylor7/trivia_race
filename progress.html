@@ -1,0 +1,167 @@
+<!Doctype html>
+<html lang="en">
+
+<head>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+        }
+
+        body {
+            background: #b0bec5;
+        }
+
+        .main {
+            margin: 50px auto;
+            width: 60%;
+        }
+
+        .progressBar {
+            position: relative;
+            width: 100%;
+            height: 40px;
+            background: #eeeeee;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 1px 2px #222;
+        }
+
+        .title {
+            position: absolute;
+            width: 100px;
+            height: 40px;
+            padding-left: 10px;
+            float: left;
+            font-weight: bold;
+            color: grey;
+            line-height: 2.5;
+            z-index: 10000;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            box-shadow: 2px 0 2px #333;
+            /* text-shadow: 1px 1px 1px #000; */
+        }
+
+        .progress_value {
+            position: relative;
+            float: right;
+            padding-right: 10px;
+            line-height: 2.5;
+            font-weight: bold;
+            color: #455a64;
+            z-index: 10000;
+        }
+
+        .progress {
+            height: 40px;
+            position: absolute;
+            border-radius: 5px;
+            box-shadow: 2px 0 2px #555;
+        }
+
+        .player1Color {
+            background: #e9fee0;
+        }
+
+        .player2Color {
+            background: #c6f8b1;
+        }
+
+        .player3Color {
+            background: #a6f086;
+        }
+
+        .player4Color {
+            background: #89e661;
+        }
+
+        .player5Color {
+            background: #6ed741;
+        }
+
+        .player1 {
+            background: #c6f8b1;
+        }
+
+        .player2 {
+            background: #a6f086;
+        }
+
+        .player3 {
+            background: #89e661;
+        }
+
+        .player4 {
+            background: #61dc4e;
+        }
+
+        .player5 {
+            background: #66bb6a;
+        }
+
+        @media (max-width: 720px) {
+            .main {
+                width: 90%;
+            }
+        }
+    </style>
+    <meta charset="utf-8">
+    <title>Progress</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+    <script>
+            $(document).ready(function () {
+                users= [{}];
+
+                for(let i = 0; i < users.length; i++) {
+                    let wid  =  (users[i].score)*1%
+                    $('.player1').animate({ width: wid }, 2000)
+                }
+                $('.player1').animate({ width: '90%' }, 2000);
+                $('.player2').animate({ width: '75%' }, 2000);
+                $('.player3').animate({ width: '50%' }, 2000);
+                $('.player4').animate({ width: '70%' }, 2000);
+                $('.player5').animate({ width: '45%' }, 2000);
+            });
+    </script>
+</head>
+
+<body>
+    <div class="main">
+        <div class="progressBar">
+            <div class="title player1Color">Player 1</div>
+            <div class="progress player1"></div>
+            <div class="progress_value"></div>
+        </div>
+        <div class="progressBar">
+            <div class="title player2Color">Player 2</div>
+            <div class="progress player2"></div>
+            <div class="progress_value"></div>
+        </div>
+        <div class="progressBar">
+            <div class="title player3Color">Player 3</div>
+            <div class="progress player3"></div>
+            <div class="progress_value"></div>
+        </div>
+        <div class="progressBar">
+            <div class="title player4Color">Player 4</div>
+            <div class="progress player4"></div>
+            <div class="progress_value"></div>
+        </div>
+        <div class="progressBar">
+            <div class="title player5Color">Player 5</div>
+            <div class="progress player5"></div>
+            <div class="progress_value"></div>
+        </div>
+    </div>
+</body>
+
+</html>
