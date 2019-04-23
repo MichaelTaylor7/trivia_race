@@ -11,6 +11,7 @@
 </head>
 
 <body>
+
     <h1>Trivia Game</h1>
     <form id="login">
         <label for="name">
@@ -23,7 +24,6 @@
     <div id="board">
 
     </div>
-   
 
     <div id="users">
         <table>
@@ -34,9 +34,10 @@
             <% for (var x in users) { %>
             <tr id="username">
                 <%= users[x].name %>
+
             </tr>
             <tr id="action">
-                <button>Ready!</button>
+                <button id="readybutton" value="hello" type="button">Ready</button>
             </tr>
             <% } %>
         </table>
@@ -46,12 +47,29 @@
         $(document).ready(function () {
             var socket = io.connect();
 
+            function getId(id) {
+                console.log("your id is", id);
+                socket.emit("ready", data)
+
+            }
+
+
             $('#login').submit(function (e) {
                 e.preventDefault();
                 name = $('#login input').val();
                 socket.emit("new_user", {
                     "name": name,
                 });
+            });
+
+            $("#readybutton").click(function (data) {
+                console.log("button working")
+                console.log(data)
+                socket.emit("ready", data)
+            });
+
+            socket.on('readybutton', function (data) {
+                console.log(data)
             });
 
             socket.on('connection_response', function (data) {
