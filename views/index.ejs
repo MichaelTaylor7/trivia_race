@@ -91,16 +91,12 @@
         $(document).ready(function () {
             var socket = io.connect();
 
-            socket.on('connect', function () {
-                socket.emit('new-user', 'username');
-            });
 
             function getId(id) {
                 console.log("your id is", id);
                 socket.emit("ready", data)
 
             }
-
 
             $('#login').submit(function (e) {
                 e.preventDefault();
