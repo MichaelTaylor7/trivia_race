@@ -16,6 +16,10 @@ app.get('/', function (req, res) {
   res.render("index", { users: users });
 });
 
+app.get('/progress', function(req, res) {
+  res.render("progress", {users: users});
+});
+
 var server = app.listen(8000, function () {
   console.log("listening on port 8000");
 });

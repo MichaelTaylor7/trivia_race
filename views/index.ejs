@@ -68,21 +68,23 @@
 
     <div id="users">
         <table>
-            <tr>
-                <th>Username</th>
-                <th>Action</th>
-            </tr>
+            
+            <th>Username</th>
+            <th>Action</th>
+            
             <% for (var x in users) { %>
-            <tr id="username">
+            
+            <td id="username">
                 <%= users[x].name %>
-
-            </tr>
-            <tr class="actionbar">
+            </td>
+            
+            <td class="actionbar">
                 <form class="readybutton">
                     <input type="hidden" name="ready" value="<%= users[x]._id %>" />
                     <button for="readybutton" type='submit'> Ready </button>
                 </form>
-            </tr>
+            </td>
+
             <% } %>
         </table>
     </div>
@@ -90,6 +92,14 @@
     <script type="text/javascript">
         $(document).ready(function () {
             var socket = io.connect();
+
+
+
+            function getId(id) {
+                console.log("your id is", id);
+                socket.emit("ready", data)
+
+            }
 
             $('#login').submit(function (e) {
                 e.preventDefault();
@@ -123,6 +133,7 @@
             socket.on('disconnect_user', function (username) {
                 $('#board').append("<p>" + username.response + " has disconnected.</p>");
             });
+
         })
     </script>
 
