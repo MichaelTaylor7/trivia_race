@@ -121,10 +121,6 @@
             $(document).ready(function () {
                 users= [{}];
 
-                for(let i = 0; i < users.length; i++) {
-                    let wid  =  (users[i].score)*1%
-                    $('.player1').animate({ width: wid }, 2000)
-                }
                 $('.player1').animate({ width: '90%' }, 2000);
                 $('.player2').animate({ width: '75%' }, 2000);
                 $('.player3').animate({ width: '50%' }, 2000);
