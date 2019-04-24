@@ -67,24 +67,22 @@
     </div>
 
     <div id="users">
-        <table>
-            
+        <table id="users_table">
             <th>Username</th>
             <th>Action</th>
-            
+
             <% for (var x in users) { %>
-            
+
             <td id="username">
                 <%= users[x].name %>
+
             </td>
-            
             <td class="actionbar">
                 <form class="readybutton">
                     <input type="hidden" name="ready" value="<%= users[x]._id %>" />
                     <button for="readybutton" type='submit'> Ready </button>
                 </form>
             </td>
-
             <% } %>
         </table>
     </div>
@@ -250,7 +248,6 @@
             var socket = io.connect();
 
 
-
             function getId(id) {
                 console.log("your id is", id);
                 socket.emit("ready", data)
@@ -268,8 +265,19 @@
                     $('#board').append("<p>" + username.response + " has disconnected.</p>");
                 });
 
-            })
-        </script>
+                $.get("#users_table", function (data) {
+                    $("#users_table").html(data);
+                });
+            });
+
+            $('.readybutton').submit(function (event) {
+                event.preventDefault();
+                ready = event.target['1']['value']
+                console.log(event.target['1']['value'])
+                console.log('ready event', ready)
+                socket.emit("action", ready);
+            });
+
 
             });
             socket.on('display_update_users', function (username) {

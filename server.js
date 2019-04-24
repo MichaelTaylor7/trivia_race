@@ -18,12 +18,18 @@ app.set('views', path.join(__dirname, './views'));
 app.set('view engine', 'ejs');
 
 app.get('/', function (req, res) {
+  // let readyUser = 0;
+  // for (let i=0; i<users.length; i++){
+  //   if (users[i].ready == true){
+  //     readyUser++;
+  //   }
+  // }
+  // if (readyUser == users.length){
+  //   res.render("progress", {users: users})
+  // }
   res.render("index", { users: users });
 });
 
-app.get('/progress', function(req, res) {
-  res.render("progress", {users: users});
-});
 
 var server = app.listen(8000, function () {
   console.log("listening on port 8000");
@@ -32,12 +38,13 @@ var server = app.listen(8000, function () {
 var io = require('socket.io').listen(server);
 
 io.sockets.on('connection', function (socket) {
+  let trueId = socket.id
   console.log("Client/socket id is: ", socket.id);
   socket.emit('connection_response', { response: socket.id });
 
   socket.on("new_user", function (newuser) {
     user = {
-      _id: socket.id,
+      _id: trueId,
       name: newuser.name,
       score: 0,
       ready: false,
@@ -65,7 +72,7 @@ io.sockets.on('connection', function (socket) {
     io.emit('disconnect_user', { response: name });
   });
 
-  socket.on("action", function (id) {
+  socket.on("readybutton", function (id) {
     console.log('--------------------')
     console.log(id)
     for (let i = 0; i < users.length; i++) {
