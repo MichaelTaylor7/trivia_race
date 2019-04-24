@@ -57,6 +57,8 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on("action", function (id) {
+    console.log('--------------------')
+    console.log(id)
     for (let i = 0; i < users.length; i++) {
       if (users[i]._id == id) {
         users[i].ready = true;
