@@ -67,13 +67,13 @@
     </div>
 
     <div id="users">
-        <table>
+        <table id="users_table">
             <th>Username</th>
             <th>Action</th>
-            
+
             <% for (var x in users) { %>
-            
-                <td id="username">
+
+            <td id="username">
                 <%= users[x].name %>
 
             </td>
@@ -104,6 +104,9 @@
                 socket.emit("new_user", {
                     "name": name,
                 });
+                $.get("#users_table", function (data) {
+                    $("#users_table").html(data);
+                });
             });
 
             $('.readybutton').submit(function (event) {
@@ -111,8 +114,7 @@
                 ready = event.target['1']['value']
                 console.log(event.target['1']['value'])
                 console.log('ready event', ready)
-                socket.emit("action", ready
-                );
+                socket.emit("action", ready);
             });
 
             socket.on('connection_response', function (data) {

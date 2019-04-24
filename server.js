@@ -60,7 +60,7 @@ io.sockets.on('connection', function (socket) {
     io.emit('disconnect_user', { response: name });
   });
 
-  socket.on("action", function (id) {
+  socket.on("readybutton", function (id) {
     console.log('--------------------')
     console.log(id)
     for (let i = 0; i < users.length; i++) {
