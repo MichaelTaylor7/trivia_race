@@ -7,6 +7,11 @@ app.engine("html", require("ejs").renderFile);
 var users = [];
 var user = {};
 
+
+
+
+
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "./static")));
 app.set('views', path.join(__dirname, './views'));
