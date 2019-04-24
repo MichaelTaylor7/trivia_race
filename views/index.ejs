@@ -8,9 +8,50 @@
     <title>Trvia Race</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png">
 </head>
 
 <body>
+    <div class="navigation">
+        <input type="checkbox" class="navigation__checkbox" id="navi-toggle">
+
+        <label for="navi-toggle" class="navigation__button">
+            <span class="navigation__icon">&nbsp;</span>
+        </label>
+
+        <div class="navigation__background">&nbsp;</div>
+
+        <nav class="navigation__nav">
+            <ul class="navigation__list">
+                <li class="navigation__item"><a href="#" class="navigation__link"><span>01</span>About Natous</a></li>
+                <li class="navigation__item"><a href="#" class="navigation__link"><span>02</span>Your benfits</a></li>
+                <li class="navigation__item"><a href="#" class="navigation__link"><span>03</span>Popular tours</a></li>
+                <li class="navigation__item"><a href="#" class="navigation__link"><span>04</span>Stories</a></li>
+                <li class="navigation__item"><a href="#" class="navigation__link"><span>05</span>Book now</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <header class="header">
+        <div class="openingScene">
+            <img class="trivia-logo" src="img/trivia.png" width="50%">
+        </div>
+        <div class="header__logo-box">
+            <img src="img/trivia.png" alt="Logo" class="header__logo">
+        </div>
+
+        <div class="header__text-box">
+            <h1 class="heading-primary">
+                <span class="heading-primary--main">Trivia I Guess?</span>
+                <span class="heading-primary--sub">Don't know don't care</span>
+            </h1>
+
+            <a href="#section-tours" class="btn btn--white btn--animated">How To Play</a>
+
+        </div>
+    </header>
 
     <h1>Trivia Game</h1>
     <form id="login">
@@ -27,17 +68,20 @@
 
     <div id="users">
         <table>
-            <th>
             <th>Username</th>
             <th>Action</th>
-            </tr>
+            
             <% for (var x in users) { %>
-            <td id="username">
+            
+                <td id="username">
                 <%= users[x].name %>
 
             </td>
-            <td id="action">
-                <button id="readybutton" value="hello" type="button">Ready</button>
+            <td class="actionbar">
+                <form class="readybutton">
+                    <input type="hidden" name="ready" value="<%= users[x]._id %>" />
+                    <button for="readybutton" type='submit'> Ready </button>
+                </form>
             </td>
             <% } %>
         </table>
@@ -66,14 +110,13 @@
                 });
             });
 
-            $("#readybutton").click(function (data) {
-                console.log("button working")
-                console.log(data)
-                socket.emit("ready", data)
-            });
-
-            socket.on('readybutton', function (data) {
-                console.log(data)
+            $('.readybutton').submit(function (event) {
+                event.preventDefault();
+                ready = event.target['1']['value']
+                console.log(event.target['1']['value'])
+                console.log('ready event', ready)
+                socket.emit("action", ready
+                );
             });
 
             socket.on('connection_response', function (data) {
