@@ -18,7 +18,6 @@ app.set('view engine', 'ejs');
 app.get('/', function (req, res) {
 
   res.render("index", { users: users });
-
 });
 
 var server = app.listen(8000, function () {
@@ -28,12 +27,13 @@ var server = app.listen(8000, function () {
 var io = require('socket.io').listen(server);
 
 io.sockets.on('connection', function (socket) {
+  let trueId = socket.id
   console.log("Client/socket id is: ", socket.id);
   socket.emit('connection_response', { response: socket.id });
 
   socket.on("new_user", function (newuser) {
     user = {
-      _id: socket.id,
+      _id: trueId,
       name: newuser.name,
       score: 50,
       ready: false,
@@ -61,7 +61,7 @@ io.sockets.on('connection', function (socket) {
     io.emit('disconnect_user', { response: name });
   });
 
-  socket.on("action", function (id) {
+  socket.on("readybutton", function (id) {
     console.log('--------------------')
     console.log(id)
     for (let i = 0; i < users.length; i++) {
