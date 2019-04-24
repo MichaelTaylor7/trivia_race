@@ -87,6 +87,162 @@
         </table>
     </div>
 
+
+
+    <section class="section-tours" id="section-tours">
+        <div class="u-center-text u-margin-bottom-big">
+            <h2 class="heading-secondary">
+                Please answer following questions
+            </h2>
+        </div>
+
+        <div class="row">
+            <div class="col-1-of-3">
+                <div class="card">
+                    <div class="card__side card__side--front">
+                        <div class="card__picture card__picture--1">
+                            &nbsp;
+                        </div>
+                        <h4 class="card__heading">
+                            <span class="card__heading-span card__heading-span--1">First Question</span>
+                        </h4>
+                        <div class="card__details">
+                            <ul>
+                                <li>When the "White House" was build?</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card__side card__side--back card__side--back-1">
+                        <div class="card__cta">
+                            <div class="card__price-box">
+                                <div class="form__group u-margin-bottom-medium">
+                                    <form action="/action_page.php" method="get">
+                                        <div id="answers">
+                                                    <input type="checkbox" name="vehicle" value="Bike"> First Answer<br>
+                                                    <input type="checkbox" name="vehicle" value="Car" checked> Second
+                                                    Answer<br>
+                                                    <input type="checkbox" name="vehicle" value="Car" checked> Third
+                                                    Answer<br>
+                                                    <input type="checkbox" name="vehicle" value="Car" checked> Fourth
+                                                    Answer<br> <br>
+                                                <a href="#popup" class="btn btn--white">Submit!</a>
+                                        </div>
+                                    </form>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-1-of-3">
+                <div class="card">
+                    <div class="card__side card__side--front">
+                        <div class="card__picture card__picture--2">
+                            &nbsp;
+                        </div>
+                        <h4 class="card__heading">
+                            <span class="card__heading-span card__heading-span--2">Second Question</span>
+                        </h4>
+                        <div class="card__details">
+                            <ul>
+                                <li>In which of the listed countries french is official language?</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="card__side card__side--back card__side--back-2">
+                        <div class="card__cta">
+                            <div class="card__price-box">
+                                <form action="/action_page.php" method="get">
+                                    <div id="answers">
+                                        <input type="checkbox" name="vehicle" value="Bike"> First Answer<br>
+                                        <input type="checkbox" name="vehicle" value="Car" checked> Second Answer<br>
+                                        <input type="checkbox" name="vehicle" value="Car" checked> Third Answer<br>
+                                        <input type="checkbox" name="vehicle" value="Car" checked> Fourth Answer<br><br>
+                                        <a href="#popup" class="btn btn--white">Submit!</a>
+                                    </div>
+                                </form>
+                                <br><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-1-of-3">
+                <div class="card">
+                    <div class="card__side card__side--front">
+                        <div class="card__picture card__picture--3">
+                            &nbsp;
+                        </div>
+                        <h4 class="card__heading">
+                            <span class="card__heading-span card__heading-span--3">Third Question</span>
+                        </h4>
+                        <div class="card__details">
+                            <ul>
+                                <li>Who is the first president of USA?</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="card__side card__side--back card__side--back-3">
+                        <div class="card__cta">
+                            <div class="card__price-box">
+                                <form action="/action_page.php" method="get">
+                                    <div id="answers">
+                                        <input type="checkbox" name="vehicle" value="Bike"> First Answer<br>
+                                        <input type="checkbox" name="vehicle" value="Car" checked> Second Answer<br>
+                                        <input type="checkbox" name="vehicle" value="Car" checked> Third Answer<br>
+                                        <input type="checkbox" name="vehicle" value="Car" checked> Fourth Answer<br><br>
+                                        <a href="#popup" class="btn btn--white">Submit!</a>
+                                    </div>
+                                </form>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var socket = io.connect();
+
+                $('#login').submit(function (e) {
+                    e.preventDefault();
+                    name = $('#login input').val();
+                    socket.emit("new_user", {
+                        "name": name,
+                    });
+                });
+
+                $('.readybutton').submit(function (event) {
+                    event.preventDefault();
+                    ready = event.target['1']['value']
+                    console.log(event.target['1']['value'])
+                    console.log('ready event', ready)
+                    socket.emit("action", ready
+                    );
+                });
+
+                socket.on('connection_response', function (data) {
+                    console.log('The server says your id is: ' + data.response);
+                    id = data.response;
+                });
+                socket.on('connect_user', function (username) {
+                    $('#login').fadeOut('fast', function () {
+                        $('#body').fadeIn('fast');
+                    });
+                });
+                socket.on('display_update_users', function (username) {
+                    $('#board').append("<p>" + username.response + " has connected.</p>");
+
     <script type="text/javascript">
         $(document).ready(function () {
             var socket = io.connect();
@@ -103,7 +259,12 @@
                 name = $('#login input').val();
                 socket.emit("new_user", {
                     "name": name,
+
                 });
+                socket.on('disconnect_user', function (username) {
+                    $('#board').append("<p>" + username.response + " has disconnected.</p>");
+                });
+
                 $.get("#users_table", function (data) {
                     $("#users_table").html(data);
                 });
@@ -117,14 +278,7 @@
                 socket.emit("action", ready);
             });
 
-            socket.on('connection_response', function (data) {
-                console.log('The server says your id is: ' + data.response);
-                id = data.response;
-            });
-            socket.on('connect_user', function (username) {
-                $('#login').fadeOut('fast', function () {
-                    $('#body').fadeIn('fast');
-                });
+
             });
             socket.on('display_update_users', function (username) {
                 $('#board').append("<p>" + username.response + " has connected.</p>");
