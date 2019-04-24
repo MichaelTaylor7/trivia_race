@@ -3,14 +3,12 @@ var bodyParser = require('body-parser');
 var path = require("path");
 const app = express();
 app.engine("html", require("ejs").renderFile);
+var request = require('request');
 // app.use(express.static(__dirname + "/public"));
 var users = [];
 var user = {};
-
-
-
-
-
+var questions;
+var count = 0;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "./static")));
@@ -18,11 +16,9 @@ app.set('views', path.join(__dirname, './views'));
 app.set('view engine', 'ejs');
 
 app.get('/', function (req, res) {
-  res.render("index", { users: users });
-});
 
-app.get('/progress', function(req, res) {
-  res.render("progress", {users: users});
+  res.render("index", { users: users });
+
 });
 
 var server = app.listen(8000, function () {
@@ -39,7 +35,7 @@ io.sockets.on('connection', function (socket) {
     user = {
       _id: socket.id,
       name: newuser.name,
-      score: 0,
+      score: 50,
       ready: false,
       answered: false
     }
@@ -71,6 +67,17 @@ io.sockets.on('connection', function (socket) {
     for (let i = 0; i < users.length; i++) {
       if (users[i]._id == id) {
         users[i].ready = true;
+        count += 1;
+      }
+      console.log(count, users.length)
+      if (count == users.length) {
+        request({ url: 'https://opentdb.com/api.php?amount=12&type=multiple', json: true }, function (err, res, json) {
+          if (err) {
+            throw err;
+          }
+          questions = json;
+          io.emit("questions", {questions: json }, users)
+        });
       }
     }
     console.log(users)

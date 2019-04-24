@@ -14,6 +14,7 @@
 </head>
 
 <body>
+        <div id='test'>
     <div class="navigation">
         <input type="checkbox" class="navigation__checkbox" id="navi-toggle">
 
@@ -49,8 +50,8 @@
             </h1>
 
             <a href="#section-tours" class="btn btn--white btn--animated">How To Play</a>
-
         </div>
+    </div>
     </header>
 
     <h1>Trivia Game</h1>
@@ -65,30 +66,28 @@
     <div id="board">
 
     </div>
-
+<center>
     <div id="users">
-        <table>
-            
-            <th>Username</th>
-            <th>Action</th>
-            
-            <% for (var x in users) { %>
-            
-            <td id="username">
-                <%= users[x].name %>
-            </td>
-            
-            <td class="actionbar">
-                <form class="readybutton">
-                    <input type="hidden" name="ready" value="<%= users[x]._id %>" />
-                    <button for="readybutton" type='submit'> Ready </button>
-                </form>
-            </td>
+            <table>
+                <tr>
+                    <th>Username</th>
+                    <th>Action</th>
+                </tr>
+                <% for (var x in users) { %>
+                <tr id="username">
+                    <%= users[x].name %>
 
-            <% } %>
-        </table>
-    </div>
-
+                </tr>
+                <tr class="actionbar">
+                    <form class="readybutton">
+                        <input type="hidden" name="ready" value="<%= users[x]._id %>" />
+                        <button for="readybutton" type='submit'> Ready </button>
+                    </form>
+                </tr>
+                <% } %>
+            </table>
+        </div>
+    </center>
 
 
     <section class="section-tours" id="section-tours">
@@ -211,7 +210,6 @@
             </div>
         </div>
 
-
         <script type="text/javascript">
             $(document).ready(function () {
                 var socket = io.connect();
@@ -244,43 +242,39 @@
                 });
                 socket.on('display_update_users', function (username) {
                     $('#board').append("<p>" + username.response + " has connected.</p>");
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var socket = io.connect();
-
-
-
-            function getId(id) {
-                console.log("your id is", id);
-                socket.emit("ready", data)
-
-            }
-
-            $('#login').submit(function (e) {
-                e.preventDefault();
-                name = $('#login input').val();
-                socket.emit("new_user", {
-                    "name": name,
-
                 });
                 socket.on('disconnect_user', function (username) {
                     $('#board').append("<p>" + username.response + " has disconnected.</p>");
                 });
 
+                socket.on('questions', function (ques, users) {
+                    test();
+                    for(let i = 0; i < users.length; i++) {
+                        let wid = (users[i].score);
+                        $('.player'+ (i+1)).animate({ width: wid+ "%" }, 2000);
+
+
+
+                    }
+                    // $('.player1').animate({ width: '90%' }, 2000);
+                    // $('.player2').animate({ width: '75%' }, 2000);
+                    // $('.player3').animate({ width: '50%' }, 2000);
+                    // $('.player4').animate({ width: '70%' }, 2000);
+                    // $('.player5').animate({ width: '45%' }, 2000);
+                    console.log(ques.questions.results)
+                    console.log(users)
+                    $('#board').append("<p>" + ques.questions.results + " has disconnected.</p>");
+                });
             })
+
+            var progress = " <div class=\"main\">\n        <div class=\"progressBar\">\n            <div class=\"title player1Color\">Player 1</div>\n            <div class=\"progress player1\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player2Color\">Player 2</div>\n            <div class=\"progress player2\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player3Color\">Player 3</div>\n            <div class=\"progress player3\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player4Color\">Player 4</div>\n            <div class=\"progress player4\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player5Color\">Player 5</div>\n            <div class=\"progress player5\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n    </div>"
+
+            function test() {
+                document.getElementById('test').innerHTML = progress
+            }
+
         </script>
-
-            });
-            socket.on('display_update_users', function (username) {
-                $('#board').append("<p>" + username.response + " has connected.</p>");
-            });
-            socket.on('disconnect_user', function (username) {
-                $('#board').append("<p>" + username.response + " has disconnected.</p>");
-            });
-
-        })
-    </script>
+    
 
 </body>
 
