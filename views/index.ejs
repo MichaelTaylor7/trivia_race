@@ -68,26 +68,27 @@
     </div>
 <center>
     <div id="users">
-        <table id="users_table">
-            <th>Username</th>
-            <th>Action</th>
+            <table id="users_table">
+                <tr>
+                    <th>Username</th>
+                    <th>Action</th>
+                </tr>
+                <% for (var x in users) { %>
+                <tr id="username">
+                    <%= users[x].name %>
 
-            <% for (var x in users) { %>
-
-            <td id="username">
-                <%= users[x].name %>
-
-            </td>
-            <td class="actionbar">
-                <form class="readybutton">
-                    <input type="hidden" name="ready" value="<%= users[x]._id %>" />
-                    <button for="readybutton" type='submit'> Ready </button>
-                </form>
-            </td>
-            <% } %>
-        </table>
-    </div>
+                </tr>
+                <tr class="actionbar">
+                    <form class="readybutton">
+                        <input type="hidden" name="ready" value="<%= users[x]._id %>" />
+                        <button for="readybutton" type='submit'> Ready </button>
+                    </form>
+                </tr>
+                <% } %>
+            </table>
+        </div>
     </center>
+
 
     <section class="section-tours" id="section-tours">
         <div class="u-center-text u-margin-bottom-big">
@@ -266,9 +267,6 @@
                 });
             })
 
-            $.get("#users_table", function (data) {
-                    $("#users_table").html(data);
-                });
             var progress = " <div class=\"main\">\n        <div class=\"progressBar\">\n            <div class=\"title player1Color\">Player 1</div>\n            <div class=\"progress player1\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player2Color\">Player 2</div>\n            <div class=\"progress player2\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player3Color\">Player 3</div>\n            <div class=\"progress player3\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player4Color\">Player 4</div>\n            <div class=\"progress player4\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player5Color\">Player 5</div>\n            <div class=\"progress player5\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n    </div>"
 
             function test() {

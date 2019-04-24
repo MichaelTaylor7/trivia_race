@@ -16,7 +16,6 @@ app.set('views', path.join(__dirname, './views'));
 app.set('view engine', 'ejs');
 
 app.get('/', function (req, res) {
-
   res.render("index", { users: users });
 });
 
@@ -61,7 +60,7 @@ io.sockets.on('connection', function (socket) {
     io.emit('disconnect_user', { response: name });
   });
 
-  socket.on("readybutton", function (id) {
+  socket.on("action", function (id) {
     console.log('--------------------')
     console.log(id)
     for (let i = 0; i < users.length; i++) {
