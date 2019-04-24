@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var path = require("path");
 const app = express();
 app.engine("html", require("ejs").renderFile);
-app.use(express.static(__dirname + "/public"));
+// app.use(express.static(__dirname + "/public"));
 var users = [];
 var user = {};
 
@@ -61,6 +61,8 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on("action", function (id) {
+    console.log('--------------------')
+    console.log(id)
     for (let i = 0; i < users.length; i++) {
       if (users[i]._id == id) {
         users[i].ready = true;

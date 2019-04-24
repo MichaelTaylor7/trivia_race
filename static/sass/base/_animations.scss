@@ -1,0 +1,140 @@
+@keyframes moveInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-10rem);
+  }
+
+  80% {
+    transform: translateX(1rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes moveInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(10rem);
+  }
+
+  80% {
+    transform: translateX(-1rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes moveInBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(3rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes opening {
+  0% {
+    opacity: 0.5;
+    transform: translateZ(5rem);
+  }
+  25% {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+  50% {
+    opacity: 1;
+  }
+  65% {
+    opacity: .8;
+  }
+  75% {
+    opacity: 0.6;
+  }
+  85% {
+    opacity: .3;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes logoTransition {
+  0% {
+    transform: translateX(-10%);
+  }
+  50% {
+    transform: translateX(55%);
+  }
+  60% {
+    transform: translateX(50%);
+  }
+  100% {
+    transform: translateX(50%);
+  }
+}
+
+@keyframes openingTextLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-10rem);
+  }
+  75% {
+    opacity: 0;
+    transform: translateX(-10rem);
+  }
+
+  95% {
+    transform: translateX(1rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes openingTextRight {
+  0% {
+    opacity: 0;
+    transform: translateX(10rem);
+  }
+  75% {
+    opacity: 0;
+    transform: translateX(10rem);
+  }
+
+  95% {
+    transform: translateX(-1rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes openingButton {
+  0% {
+    opacity: 0;
+    transform: translateY(3rem);
+  }
+  75% {
+    opacity: 0;
+    transform: translateY(3rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
