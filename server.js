@@ -30,7 +30,9 @@ io.sockets.on('connection', function (socket) {
     user = {
       _id: socket.id,
       name: newuser.name,
-      score: 0
+      score: 0,
+      ready: false,
+      answered: false
     }
     users.push(user);
     console.log(user)
@@ -53,4 +55,14 @@ io.sockets.on('connection', function (socket) {
     console.log(users)
     io.emit('disconnect_user', { response: name });
   });
+
+  socket.on("action", function (id) {
+    for (let i = 0; i < users.length; i++) {
+      if (users[i]._id == id) {
+        users[i].ready = true;
+      }
+    }
+    console.log(users)
+  });
+
 });
