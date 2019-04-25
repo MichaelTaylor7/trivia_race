@@ -1014,6 +1014,7 @@ body {
     -webkit-transform: skewY(2deg) skewX(15deg) scale(1.1);
     transform: skewY(2deg) skewX(15deg) scale(1.1);
     text-shadow: 0.5rem 1rem 2rem rgba(0, 0, 0, 0.2)
+
 }
 
 .heading-tertiary {
@@ -2350,7 +2351,141 @@ body {
 }
 
 @media only screen and (max-width: 56.25em) {
-    .book__form {
-        width: 100%
-    }
+	.book__form {
+		width: 100%
+	}
+}
+
+white-circle {
+	border: 5px solid white;
+}
+
+#answers{
+	color: white;
+	font-size: 200%;
+	display: block;
+    margin: 20px 80px;
+    position: relative;
+	border-radius: 3px;
+}
+* {
+	margin: 0;
+	padding: 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+body {
+	background: #b0bec5;
+}
+
+.main {
+	margin: 50px auto;
+	width: 60%;
+}
+
+.progressBar {
+	position: relative;
+	width: 100%;
+	height: 40px;
+	background: #eeeeee;
+	margin-bottom: 20px;
+	border-radius: 5px;
+	box-shadow: 0 1px 2px #222;
+}
+
+.title {
+	position: absolute;
+	width: 100px;
+	height: 40px;
+	padding-left: 10px;
+	float: left;
+	font-weight: bold;
+	color: grey;
+	line-height: 2.5;
+	z-index: 10000;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	box-shadow: 2px 0 2px #333;
+	/* text-shadow: 1px 1px 1px #000; */
+}
+
+.progress_value {
+	position: relative;
+	float: right;
+	padding-right: 10px;
+	line-height: 2.5;
+	font-weight: bold;
+	color: #455a64;
+	z-index: 10000;
+}
+
+.progress {
+	height: 40px;
+	position: absolute;
+	border-radius: 5px;
+	box-shadow: 2px 0 2px #555;
+}
+
+.player1Color {
+	background: #e9fee0;
+}
+
+.player2Color {
+	background: #c6f8b1;
+}
+
+.player3Color {
+	background: #a6f086;
+}
+
+.player4Color {
+	background: #89e661;
+}
+
+.player5Color {
+	background: #6ed741;
+}
+
+.player1 {
+	background: #c6f8b1;
+}
+
+.player2 {
+	background: #a6f086;
+}
+
+.player3 {
+	background: #89e661;
+}
+
+.player4 {
+	background: #61dc4e;
+}
+
+.player5 {
+	background: #66bb6a;
+}
+
+@media (max-width: 720px) {
+	.main {
+		width: 90%;
+	}
+}
+
+#answers{
+	color: white;
+	font-size: 250%;
+	display: block;
+    margin: 20px 80px;
+    position: relative;
+	border-radius: 3px;
+	text-align: center;
+}
+
+.row .col-1-of-3 {
+	width: calc((300% - 2 * 6rem) / 3);
+	display: block;
 }
