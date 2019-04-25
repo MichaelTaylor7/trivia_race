@@ -48,9 +48,15 @@
 
             <div class="header__text-box">
                 <h1 class="heading-primary">
+
                     <span class="heading-primary--main">Trivia I Guess?</span>
                     <span class="heading-primary--sub">Don't know don't care</span>
                 </h1>
+
+                <a href="#section-tours" class="btn btn--white btn--animated">How To Play</a>
+            </div>
+    </div>
+    </header>
 
                 <a href="#section-tours" class="btn btn--white btn--animated">How To Play</a>
             </div>
@@ -92,6 +98,7 @@
 
         </center>
     </div>
+
     <div id='ques'>
 
         </div>
@@ -128,7 +135,8 @@
                                 <div class="form__group u-margin-bottom-medium">
                                     <form action="/action_page.php" method="get">
                                         <div id="answers">
-                                            <input type="checkbox" name="vehicle" value="Bike"> First Answer ><br>
+
+                                            <input type="checkbox" name="vehicle" value="Bike"> First Answer<br>
                                             <input type="checkbox" name="vehicle" value="Car" checked> Second
                                             Answer<br>
                                             <input type="checkbox" name="vehicle" value="Car" checked> Third
@@ -218,7 +226,6 @@
                 </div>
             </div>
         </div>
-
         <script type="text/javascript">
             $(document).ready(function () {
                 var socket = io.connect();
