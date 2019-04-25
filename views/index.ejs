@@ -5,274 +5,138 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MindBender | Bend Your Mind</title>
+    <title>Trvia Race</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/icon-font.css">
-    <link rel="shortcut icon" type="image/png" href="img/trivia.png">
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png">
 </head>
 
 <body>
+    <div id='test'>
+        <div class="navigation">
+            <input type="checkbox" class="navigation__checkbox" id="navi-toggle">
 
-    <!-- <div class="navigation">
-        <input type="checkbox" class="navigation__checkbox" id="navi-toggle">
+            <label for="navi-toggle" class="navigation__button">
+                <span class="navigation__icon">&nbsp;</span>
+            </label>
 
-        <label for="navi-toggle" class="navigation__button">
-            <span class="navigation__icon">&nbsp;</span>
-        </label>
+            <div class="navigation__background">&nbsp;</div>
 
-        <div class="navigation__background">&nbsp;</div>
-
-        <nav class="navigation__nav">
-            <ul class="navigation__list">
-                <li class="navigation__item"><a href="#" class="navigation__link"><span>01</span>About Natous</a></li>
-                <li class="navigation__item"><a href="#" class="navigation__link"><span>02</span>Your benfits</a></li>
-                <li class="navigation__item"><a href="#" class="navigation__link"><span>03</span>Popular tours</a></li>
-                <li class="navigation__item"><a href="#" class="navigation__link"><span>04</span>Stories</a></li>
-                <li class="navigation__item"><a href="#" class="navigation__link"><span>05</span>Book now</a></li>
-            </ul>
-        </nav>
-    </div> -->
-
-    <header class="header">
-        <div class="openingScene">
-            <img class="trivia-logo" src="img/trivia.png" width="50%">
-        </div>
-        <div class="header__logo-box">
-            <img src="img/trivialogo.png" alt="Logo" class="header__logo">
+            <nav class="navigation__nav">
+                <ul class="navigation__list">
+                    <li class="navigation__item"><a href="#" class="navigation__link"><span>01</span>About Natous</a>
+                    </li>
+                    <li class="navigation__item"><a href="#" class="navigation__link"><span>02</span>Your benfits</a>
+                    </li>
+                    <li class="navigation__item"><a href="#" class="navigation__link"><span>03</span>Popular tours</a>
+                    </li>
+                    <li class="navigation__item"><a href="#" class="navigation__link"><span>04</span>Stories</a></li>
+                    <li class="navigation__item"><a href="#" class="navigation__link"><span>05</span>Book now</a></li>
+                </ul>
+            </nav>
         </div>
 
-        <div class="header__text-box">
-            <h1 class="heading-primary">
-                <span class="heading-primary--main">Mindender</span>
-                <span class="heading-primary--sub">Bend Your Mind</span>
-            </h1>
+        <header class="header">
+            <div class="openingScene">
+                <img class="trivia-logo" src="img/trivia.png" width="50%">
+            </div>
+            <div class="header__logo-box">
+                <img src="img/trivia.png" alt="Logo" class="header__logo">
+            </div>
 
-            <a href="#howTo" id="howTo" class="btn btn--white btn--animated">How To Play</a>
+            <div class="header__text-box">
+                <h1 class="heading-primary">
 
-        </div>
-        </div>
+                    <span class="heading-primary--main">Trivia I Guess?</span>
+                    <span class="heading-primary--sub">Don't know don't care</span>
+                </h1>
+
+                <a href="#section-tours" class="btn btn--white btn--animated">How To Play</a>
+            </div>
+    </div>
     </header>
+        <h1>Trivia Game</h1>
+        <form id="login">
+            <label for="name">
+                <b>Please enter your name:</b>
+            </label>
+            <input required type="text" name="name" value="Username" />
+            <button for="login" type='submit'> ENTER GAME</button>
+        </form>
+        <div id="board">
 
-    <section class="section-features">
-
-        <div class="row">
-            <div class="col-1-of-4">
-                <div class="feature-box">
-                    <i class="feature-box__icon icon-basic-bolt"></i>
-                    <h3 class="heading-tertiary u-margin-bottom-small">Ready Up</h3>
-                    <p class="feature-box__text">Grab a few friends, punch in your name and get to play the ultimate
-                        trivia game. Hopefully this won't ruin friendships.
-
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-1-of-4">
-                <div class="feature-box">
-                    <i class="feature-box__icon icon-basic-smartphone"></i>
-                    <h3 class="heading-tertiary u-margin-bottom-small">Grab Your Phone</h3>
-                    <p class="feature-box__text">
-                        In order to play the game, you'll need your phone to answer the questions. Don't let your
-                        friends see the answer you chose!
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-1-of-4">
-                <div class="feature-box">
-                    <i class="feature-box__icon icon-basic-joypad"></i>
-                    <h3 class="heading-tertiary u-margin-bottom-small">Gameplay</h3>
-                    <p class="feature-box__text">
-                        Whenever a question is answered correctly, your progress bar advances. You want to be the first
-                        person to fill your bar in order to win.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-1-of-4">
-                <div class="feature-box">
-                    <i class="feature-box__icon icon-basic-gear"></i>
-                    <h3 class="heading-tertiary u-margin-bottom-small">Play Smart</h3>
-                    <p class="feature-box__text">
-                        Please don't play this game while driving or operating heavy machinary. Best played with booze.
-                        Have fun!
-                    </p>
-                </div>
-            </div>
         </div>
-    </section>
+        <center>
+            <div id="users">
+                <table id="users_table">
+                    <tr>
+                        <th>Username</th>
+                        <th>Action</th>
+                    </tr>
+                    <% for (var x in users) { %>
+                    <tr id="username">
+                        <%= users[x].name %>
 
-    <br><br><br><br><br>
-    <div class="section-enter">
-        <div class="row">
-            <div class="book">
-                <div class="book__form">
-
-                    <form id="login" class="form">
-                        
-                        <div class="u-margin-bottom-medium">
-                            <h2 class="heading-secondary">
-                                Trivia Game
-                            </h2>
-                        </div>
-
-                        <div class="form__group">
-                            <label for="name" class="form__label">Enter Name</label>
-                            <input type="text" name="name" class="form__input" value="Username" id="name" required>
-                        </div>
-                        <!-- <label for="name">
-                            <b>Please enter your name:</b>
-                        </label> -->
-                        <div class="form__group">
-                            <button for="login" type='submit' class="btn btn--green"> ENTER GAME</button>
-                        </div>
-                        <!-- <input required type="text" name="name" value="Username" />
-                        <button for="login" type='submit'> ENTER GAME</button> -->
-                    </form>
-
-
-                </div>
+                    </tr>
+                    <tr class="actionbar">
+                        <form class="readybutton">
+                            <input type="hidden" name="ready" value="<%= users[x]._id %>" />
+                            <button for="readybutton" type='submit'> Ready </button>
+                        </form>
+                    </tr>
+                    <% } %>
+                </table>
             </div>
-        </div>
+
+        </center>
     </div>
 
+    <div id='ques'>
 
-    <div id="board">
-
-    </div>
+        </div>
     <center>
-        <div id="users">
-            <table id="users_table">
-                <tr>
-                    <th>Username</th>
-                    <th>Action</th>
-                </tr>
-                <% for (var x in users) { %>
-                <tr id="username">
-                    <%= users[x].name %>
-
-                </tr>
-                <tr class="actionbar">
-                    <form class="readybutton">
-                        <input type="hidden" name="ready" value="<%= users[x]._id %>" />
-                        <button for="readybutton" type='submit'> Ready </button>
-                    </form>
-                </tr>
-                <% } %>
-            </table>
-        </div>
-
+        <button><div id="question">Question</div> </button>
     </center>
-    </div>
 
-    <center>
-        <div id="users">
-            <table>
+        <script type="text/javascript">
+        var socket = io.connect();
 
-                <th>Username</th>
-                <th>Action</th>
-
-                <% for (var x in users) { %>
-
-                <td id="username">
-                    <%= users[x].name %>
-
-                </td>
-                <td class="actionbar">
-                    <form class="readybutton">
-                        <input type="hidden" name="ready" value="<%= users[x]._id %>" />
-                        <button for="readybutton" type='submit'> Ready </button>
-                    </form>
-                </td>
-                <% } %>
-            </table>
-        </div>
-
-        <section class="section-tours" id="section-tours">
-            <div class="u-center-text u-margin-bottom-big">
-                <h2 class="heading-secondary">
-                    Please answer following questions
-                </h2>
-            </div>
-
-            <div class="row">
-                <div class="col-1-of-3">
-                    <div class="card">
-                        <div class="card__side card__side--front">
-                            <div class="card__picture card__picture--2">
-                                &nbsp;
-                            </div>
-                            <h4 class="card__heading">
-                                <span class="card__heading-span card__heading-span--2">Second Question</span>
-                            </h4>
-                            <div class="card__details">
-                                <ul>
-                                    <li>In which of the listed countries french is official language?</li>
-                                </ul>
-                            </div>
-
-                        </div>
-                        <div class="card__side card__side--back card__side--back-2">
-                            <div class="card__cta">
-                                <div class="card__price-box">
-                                    <form action="/action_page.php" method="get">
-                                        <div id="answers">
-                                            <input type="checkbox" name="vehicle" value="Bike"> First Answer<br>
-                                            <input type="checkbox" name="vehicle" value="Car" checked> Second Answer<br>
-                                            <input type="checkbox" name="vehicle" value="Car" checked> Third Answer<br>
-                                            <input type="checkbox" name="vehicle" value="Car" checked> Fourth
-                                            Answer<br><br>
-                                            <a href="#popup" class="btn btn--white">Submit!</a>
-                                        </div>
-                                    </form>
-                                    <br><br>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    var socket = io.connect();
-
-                    $('#login').submit(function (e) {
-                        e.preventDefault();
-                        name = $('#login input').val();
-                        socket.emit("new_user", {
-                            "name": name,
-                        });
+            $(document).ready(function () {
+               
+    
+                $('#login').submit(function (e) {
+                    e.preventDefault();
+                    name = $('#login input').val();
+                    socket.emit("new_user", {
+                        "name": name,
                     });
+                });
 
-                    $('.readybutton').submit(function (event) {
-                        event.preventDefault();
-                        ready = event.target['1']['value']
-                        console.log(event.target['1']['value'])
-                        console.log('ready event', ready)
-                        socket.emit("action", ready
-                        );
-                    });
+                $('.readybutton').submit(function (event) {
+                    event.preventDefault();
+                    ready = event.target['1']['value']
+                    console.log(event.target['1']['value'])
+                    console.log('ready event', ready)
+                    socket.emit("action", ready
+                    );
+                });
 
-                    $('#question').click(function () {
-                        socket.emit('ques');
-                    });
+          
 
-                    socket.on('connection_response', function (data) {
-                        console.log('The server says your id is: ' + data.response);
-                        id = data.response;
-                    });
-                    socket.on('connect_user', function (username) {
-                        $('#login').fadeOut('fast', function () {
-                            $('#body').fadeIn('fast');
-                        });
-                    });
-                    socket.on('display_update_users', function (username) {
-                        $('#board').append("<p>" + username.response + " has connected.</p>");
-                    });
+                $('#question').click(function () {
+                    socket.emit('ques');
+                });
 
+                socket.on('connection_response', function (data) {
+                    console.log('The server says your id is: ' + data.response);
+                    id = data.response;
+                });
+                socket.on('connect_user', function (username) {
+                    $('#login').fadeOut('fast', function () {
+                        $('#body').fadeIn('fast');
+                    });
                 });
                 socket.on('display_update_users', function (username) {
                     $('#board').append("<p>" + username.response + " has connected.</p>");
@@ -280,18 +144,53 @@
                 socket.on('disconnect_user', function (username) {
                     $('#board').append("<p>" + username.response + " has disconnected.</p>");
                 });
-                // $("#howTo").click(function () {
-                //     $([document.documentElement, document.body]).animate({
-                //         scrollTop: $(".section-features").offset().bottom
-                //     }, 2000);
-                // });
-                $('#howTo').click(function () {
-                    $([document.documentElement, document.body]).animate({
-                        scrollTop: $('.section-features').offset().top
-                    })
-                })
 
-            </script>
+                socket.on('questions', function (ques, users) {
+                    test();
+                    for (let i = 0; i < users.length; i++) {
+                        let wid = (users[i].score);
+                        $('.player' + (i + 1)).animate({ width: wid + "%" }, 2000);
+
+                    }
+                    console.log(ques.questions.results)
+                    console.log(users)
+                });
+
+                socket.on('question_options', function (ques, answers) {
+                   reveal_questions(ques, answers);
+                });
+                socket.on('update', function (users) {
+                    for (let i = 0; i < users.length; i++) {
+                        let wid = (users[i].score);
+                        $('.player' + (i + 1)).animate({ width: wid + "%" }, 2000);
+
+                    }
+                });
+
+            });
+
+            var progress = " <div class=\"main\">\n        <div class=\"progressBar\">\n            <div class=\"title player1Color\">Player 1</div>\n            <div class=\"progress player1\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player2Color\">Player 2</div>\n            <div class=\"progress player2\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player3Color\">Player 3</div>\n            <div class=\"progress player3\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player4Color\">Player 4</div>\n            <div class=\"progress player4\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player5Color\">Player 5</div>\n            <div class=\"progress player5\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n    </div>"
+            function test() {
+                document.getElementById('test').innerHTML = progress
+            }
+
+            function reveal_questions(ques, answers) {
+               console.log(ques, answers)
+                questions = "<section class=\"section-tours\" id=\"section-tours\">\n    <div class=\"u-center-text u-margin-bottom-big\">\n        <h2 class=\"heading-secondary\">\n            Please answer following questions\n        </h2>\n    </div>\n<div class=\"row\">\n    <div class=\"col-1-of-3\">\n        <div class=\"card\">\n            <div class=\"card__side card__side--front\">\n                <div class=\"card__picture card__picture--2\">\n                    &nbsp;\n                </div>\n                <h4 class=\"card__heading\">\n                    <span class=\"card__heading-span card__heading-span--2\">Question</span>\n                </h4>\n                <div class=\"card__details\">\n                    <ul>\n                        <li>"+ques.question+"</li>\n                    </ul>\n                </div>\n\n            </div>\n            <div class=\"card__side card__side--back card__side--back-2\">\n                <div class=\"card__cta\">\n                    <div class=\"card__price-box\">\n                        <form id=\"player_correct\" >\n                            <div id=\"answers\">\n                                <input type=\"radio\" class=\"answer\" name=\"answer\" value=\""+answers[0]+"\"> "+answers[0]+"<br>\n                                <input type=\"radio\" class=\"answer\" name=\"answer\" value=\""+answers[1]+"\">"+answers[1]+"<br>\n                                <input type=\"radio\" class=\"answer\" name=\"answer\" value=\""+answers[2]+"\"> "+answers[2]+"<br>\n                                <input type=\"radio\" class=\"answer\" name=\"answer\" value=\""+answers[3]+"\">"+answers[3]+"<br><br>\n                                <button id=\"player_correct\" class=\"btn btn--white\" type='submit'>Submit!</button>\n                            </div>\n                        </form>\n                        <br><br>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>"
+                document.getElementById('ques').innerHTML = questions
+
+                $('#player_correct').submit(function (event) {
+                    event.preventDefault();
+                    console.log(event)
+                    answer = $('.answer:checked').val();
+                    console.log("answer is", answer)
+                    socket.emit("answer", answer
+                    );
+                });
+            }
+
+
+        </script>
 
 
 </body>
