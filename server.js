@@ -9,6 +9,8 @@ var users = [];
 var user = {};
 var questions;
 var count = 0;
+var question_count = 0;
+var answers = [];
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "./static")));
@@ -80,6 +82,23 @@ io.sockets.on('connection', function (socket) {
       }
     }
     console.log(users)
+  });
+
+  socket.on("ques", function(){
+    answers = [];
+    ques = questions.results[question_count]
+    question_count ++
+    answers.push(ques.correct_answer)
+    answers.push(ques.incorrect_answers[0])
+    answers.push(ques.incorrect_answers[1])
+    answers.push(ques.incorrect_answers[2])
+
+    answers.sort(() => Math.random()- 0.5);
+    
+    console.log(ques)
+    console.log(answers)
+   
+    io.emit("question_options", ques)
   });
 
 });

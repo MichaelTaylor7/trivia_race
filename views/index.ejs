@@ -58,41 +58,53 @@
     </div>
     </header>
 
-    <h1>Trivia Game</h1>
-    <form id="login">
-        <label for="name">
-            <b>Please enter your name:</b>
-        </label>
-        <input required type="text" name="name" value="Username" />
-        <button for="login" type='submit'> ENTER GAME</button>
-    </form>
+                <a href="#section-tours" class="btn btn--white btn--animated">How To Play</a>
+            </div>
 
-    <div id="board">
+        </header>
 
-    </div>
-    <center>
-        <div id="users">
-            <table id="users_table">
-                <tr>
-                    <th>Username</th>
-                    <th>Action</th>
-                </tr>
-                <% for (var x in users) { %>
-                <tr id="username">
-                    <%= users[x].name %>
+        <h1>Trivia Game</h1>
+        <form id="login">
+            <label for="name">
+                <b>Please enter your name:</b>
+            </label>
+            <input required type="text" name="name" value="Username" />
+            <button for="login" type='submit'> ENTER GAME</button>
+        </form>
+        <div id="board">
 
-                </tr>
-                <tr class="actionbar">
-                    <form class="readybutton">
-                        <input type="hidden" name="ready" value="<%= users[x]._id %>" />
-                        <button for="readybutton" type='submit'> Ready </button>
-                    </form>
-                </tr>
-                <% } %>
-            </table>
         </div>
-    </center>
+        <center>
+            <div id="users">
+                <table id="users_table">
+                    <tr>
+                        <th>Username</th>
+                        <th>Action</th>
+                    </tr>
+                    <% for (var x in users) { %>
+                    <tr id="username">
+                        <%= users[x].name %>
 
+                    </tr>
+                    <tr class="actionbar">
+                        <form class="readybutton">
+                            <input type="hidden" name="ready" value="<%= users[x]._id %>" />
+                            <button for="readybutton" type='submit'> Ready </button>
+                        </form>
+                    </tr>
+                    <% } %>
+                </table>
+            </div>
+
+        </center>
+    </div>
+
+    <div id='ques'>
+
+        </div>
+    <center>
+        <button><div id="question">Question 1</div> </button>
+    </center>
 
     <section class="section-tours" id="section-tours">
         <div class="u-center-text u-margin-bottom-big">
@@ -113,7 +125,7 @@
                         </h4>
                         <div class="card__details">
                             <ul>
-                                <li>When the "White House" was build?</li>
+                                <li> Quesetion</li>
                             </ul>
                         </div>
                     </div>
@@ -123,6 +135,7 @@
                                 <div class="form__group u-margin-bottom-medium">
                                     <form action="/action_page.php" method="get">
                                         <div id="answers">
+
                                             <input type="checkbox" name="vehicle" value="Bike"> First Answer<br>
                                             <input type="checkbox" name="vehicle" value="Car" checked> Second
                                             Answer<br>
@@ -234,6 +247,10 @@
                     );
                 });
 
+                $('#question').click(function () {
+                    socket.emit('ques');
+                });
+
                 socket.on('connection_response', function (data) {
                     console.log('The server says your id is: ' + data.response);
                     id = data.response;
@@ -256,25 +273,30 @@
                         let wid = (users[i].score);
                         $('.player' + (i + 1)).animate({ width: wid + "%" }, 2000);
 
-
-
                     }
-                    // $('.player1').animate({ width: '90%' }, 2000);
-                    // $('.player2').animate({ width: '75%' }, 2000);
-                    // $('.player3').animate({ width: '50%' }, 2000);
-                    // $('.player4').animate({ width: '70%' }, 2000);
-                    // $('.player5').animate({ width: '45%' }, 2000);
                     console.log(ques.questions.results)
                     console.log(users)
-                    $('#board').append("<p>" + ques.questions.results + " has disconnected.</p>");
+                    $('#board').append("<p>" + ques.questions.results + "</p>");
                 });
-            })
+
+                socket.on('question_options', function (ques) {
+                    console.log("front end")
+                   reveal_questions();
+                });
+
+            });
 
             var progress = " <div class=\"main\">\n        <div class=\"progressBar\">\n            <div class=\"title player1Color\">Player 1</div>\n            <div class=\"progress player1\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player2Color\">Player 2</div>\n            <div class=\"progress player2\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player3Color\">Player 3</div>\n            <div class=\"progress player3\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player4Color\">Player 4</div>\n            <div class=\"progress player4\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player5Color\">Player 5</div>\n            <div class=\"progress player5\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n    </div>"
 
             function test() {
                 document.getElementById('test').innerHTML = progress
             }
+
+            function reveal_questions() {
+                console.log("////////////////////////////////////")
+                document.getElementById('ques').innerHTML = progress
+            }
+
 
         </script>
 
