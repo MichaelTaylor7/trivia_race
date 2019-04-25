@@ -144,6 +144,9 @@
 
     </div>
     <center>
+
+        <button><div id="question">Question</div> </button>
+
         <div id="users">
             <table id="users_table">
                 <tr>
@@ -164,6 +167,7 @@
                 <% } %>
             </table>
         </div>
+
 
     </center>
     </div>
@@ -245,6 +249,7 @@
                         socket.emit("new_user", {
                             "name": name,
                         });
+
                     });
 
                     $('.readybutton').submit(function (event) {
@@ -280,6 +285,54 @@
                 socket.on('disconnect_user', function (username) {
                     $('#board').append("<p>" + username.response + " has disconnected.</p>");
                 });
+
+                socket.on('questions', function (ques, users) {
+                    test();
+                    for (let i = 0; i < users.length; i++) {
+                        let wid = (users[i].score);
+                        $('.player' + (i + 1)).animate({ width: wid + "%" }, 2000);
+
+                    }
+                    console.log(ques.questions.results)
+                    console.log(users)
+                });
+
+                socket.on('question_options', function (ques, answers) {
+                   reveal_questions(ques, answers);
+                });
+                socket.on('update', function (users) {
+                    for (let i = 0; i < users.length; i++) {
+                        let wid = (users[i].score);
+                        $('.player' + (i + 1)).animate({ width: wid + "%" }, 2000);
+
+                    }
+                });
+
+            });
+
+            var progress = " <div class=\"main\">\n        <div class=\"progressBar\">\n            <div class=\"title player1Color\">Player 1</div>\n            <div class=\"progress player1\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player2Color\">Player 2</div>\n            <div class=\"progress player2\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player3Color\">Player 3</div>\n            <div class=\"progress player3\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player4Color\">Player 4</div>\n            <div class=\"progress player4\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player5Color\">Player 5</div>\n            <div class=\"progress player5\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n    </div>"
+            function test() {
+                document.getElementById('test').innerHTML = progress
+            }
+
+            function reveal_questions(ques, answers) {
+               console.log(ques, answers)
+                questions = "<section class=\"section-tours\" id=\"section-tours\">\n    <div class=\"u-center-text u-margin-bottom-big\">\n        <h2 class=\"heading-secondary\">\n            Please answer following questions\n        </h2>\n    </div>\n<div class=\"row\">\n    <div class=\"col-1-of-3\">\n        <div class=\"card\">\n            <div class=\"card__side card__side--front\">\n                <div class=\"card__picture card__picture--2\">\n                    &nbsp;\n                </div>\n                <h4 class=\"card__heading\">\n                    <span class=\"card__heading-span card__heading-span--2\">Question</span>\n                </h4>\n                <div class=\"card__details\">\n                    <ul>\n                        <li>"+ques.question+"</li>\n                    </ul>\n                </div>\n\n            </div>\n            <div class=\"card__side card__side--back card__side--back-2\">\n                <div class=\"card__cta\">\n                    <div class=\"card__price-box\">\n                        <form id=\"player_correct\" >\n                            <div id=\"answers\">\n                                <input type=\"radio\" class=\"answer\" name=\"answer\" value=\""+answers[0]+"\"> "+answers[0]+"<br>\n                                <input type=\"radio\" class=\"answer\" name=\"answer\" value=\""+answers[1]+"\">"+answers[1]+"<br>\n                                <input type=\"radio\" class=\"answer\" name=\"answer\" value=\""+answers[2]+"\"> "+answers[2]+"<br>\n                                <input type=\"radio\" class=\"answer\" name=\"answer\" value=\""+answers[3]+"\">"+answers[3]+"<br><br>\n                                <button id=\"player_correct\" class=\"btn btn--white\" type='submit'>Submit!</button>\n                            </div>\n                        </form>\n                        <br><br>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>"
+                document.getElementById('ques').innerHTML = questions
+
+                $('#player_correct').submit(function (event) {
+                    event.preventDefault();
+                    console.log(event)
+                    answer = $('.answer:checked').val();
+                    console.log("answer is", answer)
+                    socket.emit("answer", answer
+                    );
+                });
+            }
+
+
+        </script>
+
                 // $("#howTo").click(function () {
                 //     $([document.documentElement, document.body]).animate({
                 //         scrollTop: $(".section-features").offset().bottom
@@ -292,6 +345,7 @@
                 })
 
             </script>
+
 
 
 </body>
