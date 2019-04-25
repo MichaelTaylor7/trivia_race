@@ -62,27 +62,6 @@
         <div id="board">
 
     </div>
-    <center>
-        <div id="users">
-            <table id="users_table">
-                <tr>
-                    <th>Username</th>
-                    <th>Action</th>
-                </tr>
-                <% for (var x in users) { %>
-                <tr id="username">
-                    <%= users[x].name %>
-
-                </tr>
-                <tr class="actionbar">
-                    <form class="readybutton">
-                        <input type="hidden" name="ready" value="<%= users[x]._id %>" />
-                        <button for="readybutton" type='submit'> Ready </button>
-                    </form>
-                </tr>
-                <% } %>
-            </table>
-        </div>
         <section class="section-book">
                 <div class="row">
                         <h1>Trivia Game</h1>
@@ -176,11 +155,7 @@
             $(document).ready(function () {
                 var socket = io.connect();
 
-                $.each(users[i], function (key, value) {
-                    $('#users_table tr:last').after("<tr><td>" + value +
-                        "</td><td>                    <form class='readybutton'> <input type = 'hidden' name = 'ready' value = '<%= users[x]._id %>' / > <button for = 'readybutton' type = 'submit' > Ready < /button> </form></td > < /tr>"
-                        );
-                });
+              
 
                 // function loadTable(tableId, fields, data) {
                 //     //$('#' + tableId).empty(); //not really necessary
@@ -205,6 +180,7 @@
                     socket.emit("new_user", {
                         "name": name,
                     });
+                    document.getElementById('users_table').innerHTML=
 
                     // console.log('assigning name')
                     // //  $('#users_table').load) +  ' #users_table');
