@@ -98,7 +98,7 @@ io.sockets.on('connection', function (socket) {
     console.log(ques)
     console.log(answers)
    
-    io.emit("question_options", ques)
+    io.emit("question_options", ques, answers)
   });
 
 });
