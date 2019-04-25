@@ -2489,3 +2489,16 @@ body {
 	width: calc((300% - 2 * 6rem) / 3);
 	display: block;
 }
+
+.section-enter {
+    padding: 15rem 0;
+    background-image: -webkit-gradient(linear, left top, right bottom, from(#7ed56f), to(#28b485));
+	background-image: linear-gradient(to right bottom, #7ed56f, #28b485);
+	width: 100%;
+}
+
+@media only screen and (max-width: 56.25em) {
+    .section-enter {
+        padding: 10rem 0
+    }
+}
