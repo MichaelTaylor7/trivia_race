@@ -3,9 +3,12 @@ var bodyParser = require('body-parser');
 var path = require("path");
 const app = express();
 app.engine("html", require("ejs").renderFile);
+var request = require('request');
 // app.use(express.static(__dirname + "/public"));
 var users = [];
 var user = {};
+var questions;
+var count = 0;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "./static")));
@@ -23,14 +26,15 @@ var server = app.listen(8000, function () {
 var io = require('socket.io').listen(server);
 
 io.sockets.on('connection', function (socket) {
+  let trueId = socket.id
   console.log("Client/socket id is: ", socket.id);
   socket.emit('connection_response', { response: socket.id });
 
   socket.on("new_user", function (newuser) {
     user = {
-      _id: socket.id,
+      _id: trueId,
       name: newuser.name,
-      score: 0,
+      score: 50,
       ready: false,
       answered: false
     }
@@ -57,9 +61,22 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on("action", function (id) {
+    console.log('--------------------')
+    console.log(id)
     for (let i = 0; i < users.length; i++) {
       if (users[i]._id == id) {
         users[i].ready = true;
+        count += 1;
+      }
+      console.log(count, users.length)
+      if (count == users.length) {
+        request({ url: 'https://opentdb.com/api.php?amount=12&type=multiple', json: true }, function (err, res, json) {
+          if (err) {
+            throw err;
+          }
+          questions = json;
+          io.emit("questions", {questions: json }, users)
+        });
       }
     }
     console.log(users)

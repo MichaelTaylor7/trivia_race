@@ -14,6 +14,7 @@
 </head>
 
 <body>
+        <div id='test'>
     <div class="navigation">
         <input type="checkbox" class="navigation__checkbox" id="navi-toggle">
 
@@ -50,8 +51,8 @@
             </h1>
 
             <a href="#section-tours" class="btn btn--white btn--animated">How To Play</a>
-
         </div>
+    </div>
     </header>
 
     <h1>Trivia Game</h1>
@@ -59,80 +60,222 @@
         <label for="name">
             <b>Please enter your name:</b>
         </label>
-        <input required type="text" name="name" value="Robert" />
+        <input required type="text" name="name" value="Username" />
         <button for="login" type='submit'> ENTER GAME</button>
     </form>
 
     <div id="board">
 
     </div>
-
-    <h1 class="hello">hello</h1>
-
+<center>
     <div id="users">
-        <table>
-            <tr>
-                <th>Username</th>
-                <th>Action</th>
-            </tr>
-            <% for (var x in users) { %>
-            <tr id="username">
-                <%= users[x].name %>
+            <table id="users_table">
+                <tr>
+                    <th>Username</th>
+                    <th>Action</th>
+                </tr>
+                <% for (var x in users) { %>
+                <tr id="username">
+                    <%= users[x].name %>
 
-            </tr>
-            <tr id="action">
-                <button id="readybutton" value="hello" type="button">Ready</button>
-            </tr>
-            <% } %>
-        </table>
-    </div>
+                </tr>
+                <tr class="actionbar">
+                    <form class="readybutton">
+                        <input type="hidden" name="ready" value="<%= users[x]._id %>" />
+                        <button for="readybutton" type='submit'> Ready </button>
+                    </form>
+                </tr>
+                <% } %>
+            </table>
+        </div>
+    </center>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var socket = io.connect();
 
-            function getId(id) {
-                console.log("your id is", id);
-                socket.emit("ready", data)
+    <section class="section-tours" id="section-tours">
+        <div class="u-center-text u-margin-bottom-big">
+            <h2 class="heading-secondary">
+                Please answer following questions
+            </h2>
+        </div>
 
+        <div class="row">
+            <div class="col-1-of-3">
+                <div class="card">
+                    <div class="card__side card__side--front">
+                        <div class="card__picture card__picture--1">
+                            &nbsp;
+                        </div>
+                        <h4 class="card__heading">
+                            <span class="card__heading-span card__heading-span--1">First Question</span>
+                        </h4>
+                        <div class="card__details">
+                            <ul>
+                                <li>When the "White House" was build?</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card__side card__side--back card__side--back-1">
+                        <div class="card__cta">
+                            <div class="card__price-box">
+                                <div class="form__group u-margin-bottom-medium">
+                                    <form action="/action_page.php" method="get">
+                                        <div id="answers">
+                                                    <input type="checkbox" name="vehicle" value="Bike"> First Answer<br>
+                                                    <input type="checkbox" name="vehicle" value="Car" checked> Second
+                                                    Answer<br>
+                                                    <input type="checkbox" name="vehicle" value="Car" checked> Third
+                                                    Answer<br>
+                                                    <input type="checkbox" name="vehicle" value="Car" checked> Fourth
+                                                    Answer<br> <br>
+                                                <a href="#popup" class="btn btn--white">Submit!</a>
+                                        </div>
+                                    </form>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-1-of-3">
+                <div class="card">
+                    <div class="card__side card__side--front">
+                        <div class="card__picture card__picture--2">
+                            &nbsp;
+                        </div>
+                        <h4 class="card__heading">
+                            <span class="card__heading-span card__heading-span--2">Second Question</span>
+                        </h4>
+                        <div class="card__details">
+                            <ul>
+                                <li>In which of the listed countries french is official language?</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="card__side card__side--back card__side--back-2">
+                        <div class="card__cta">
+                            <div class="card__price-box">
+                                <form action="/action_page.php" method="get">
+                                    <div id="answers">
+                                        <input type="checkbox" name="vehicle" value="Bike"> First Answer<br>
+                                        <input type="checkbox" name="vehicle" value="Car" checked> Second Answer<br>
+                                        <input type="checkbox" name="vehicle" value="Car" checked> Third Answer<br>
+                                        <input type="checkbox" name="vehicle" value="Car" checked> Fourth Answer<br><br>
+                                        <a href="#popup" class="btn btn--white">Submit!</a>
+                                    </div>
+                                </form>
+                                <br><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-1-of-3">
+                <div class="card">
+                    <div class="card__side card__side--front">
+                        <div class="card__picture card__picture--3">
+                            &nbsp;
+                        </div>
+                        <h4 class="card__heading">
+                            <span class="card__heading-span card__heading-span--3">Third Question</span>
+                        </h4>
+                        <div class="card__details">
+                            <ul>
+                                <li>Who is the first president of USA?</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="card__side card__side--back card__side--back-3">
+                        <div class="card__cta">
+                            <div class="card__price-box">
+                                <form action="/action_page.php" method="get">
+                                    <div id="answers">
+                                        <input type="checkbox" name="vehicle" value="Bike"> First Answer<br>
+                                        <input type="checkbox" name="vehicle" value="Car" checked> Second Answer<br>
+                                        <input type="checkbox" name="vehicle" value="Car" checked> Third Answer<br>
+                                        <input type="checkbox" name="vehicle" value="Car" checked> Fourth Answer<br><br>
+                                        <a href="#popup" class="btn btn--white">Submit!</a>
+                                    </div>
+                                </form>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var socket = io.connect();
+
+                $('#login').submit(function (e) {
+                    e.preventDefault();
+                    name = $('#login input').val();
+                    socket.emit("new_user", {
+                        "name": name,
+                    });
+                });
+
+                $('.readybutton').submit(function (event) {
+                    event.preventDefault();
+                    ready = event.target['1']['value']
+                    console.log(event.target['1']['value'])
+                    console.log('ready event', ready)
+                    socket.emit("action", ready
+                    );
+                });
+
+                socket.on('connection_response', function (data) {
+                    console.log('The server says your id is: ' + data.response);
+                    id = data.response;
+                });
+                socket.on('connect_user', function (username) {
+                    $('#login').fadeOut('fast', function () {
+                        $('#body').fadeIn('fast');
+                    });
+                });
+                socket.on('display_update_users', function (username) {
+                    $('#board').append("<p>" + username.response + " has connected.</p>");
+                });
+                socket.on('disconnect_user', function (username) {
+                    $('#board').append("<p>" + username.response + " has disconnected.</p>");
+                });
+
+                socket.on('questions', function (ques, users) {
+                    test();
+                    for(let i = 0; i < users.length; i++) {
+                        let wid = (users[i].score);
+                        $('.player'+ (i+1)).animate({ width: wid+ "%" }, 2000);
+
+
+
+                    }
+                    // $('.player1').animate({ width: '90%' }, 2000);
+                    // $('.player2').animate({ width: '75%' }, 2000);
+                    // $('.player3').animate({ width: '50%' }, 2000);
+                    // $('.player4').animate({ width: '70%' }, 2000);
+                    // $('.player5').animate({ width: '45%' }, 2000);
+                    console.log(ques.questions.results)
+                    console.log(users)
+                    $('#board').append("<p>" + ques.questions.results + " has disconnected.</p>");
+                });
+            })
+
+            var progress = " <div class=\"main\">\n        <div class=\"progressBar\">\n            <div class=\"title player1Color\">Player 1</div>\n            <div class=\"progress player1\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player2Color\">Player 2</div>\n            <div class=\"progress player2\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player3Color\">Player 3</div>\n            <div class=\"progress player3\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player4Color\">Player 4</div>\n            <div class=\"progress player4\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player5Color\">Player 5</div>\n            <div class=\"progress player5\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n    </div>"
+
+            function test() {
+                document.getElementById('test').innerHTML = progress
             }
 
-
-            $('#login').submit(function (e) {
-                e.preventDefault();
-                name = $('#login input').val();
-                socket.emit("new_user", {
-                    "name": name,
-                });
-            });
-
-            $("#readybutton").click(function (data) {
-                console.log("button working")
-                console.log(data)
-                socket.emit("ready", data)
-            });
-
-            socket.on('readybutton', function (data) {
-                console.log(data)
-            });
-
-            socket.on('connection_response', function (data) {
-                console.log('The server says your id is: ' + data.response);
-                id = data.response;
-            });
-            socket.on('connect_user', function (username) {
-                $('#login').fadeOut('fast', function () {
-                    $('#body').fadeIn('fast');
-                });
-            });
-            socket.on('display_update_users', function (username) {
-                $('#board').append("<p>" + username.response + " has connected.</p>");
-            });
-            socket.on('disconnect_user', function (username) {
-                $('#board').append("<p>" + username.response + " has disconnected.</p>");
-            });
-        })
-    </script>
+        </script>
+    
 
 </body>
 
