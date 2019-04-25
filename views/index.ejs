@@ -14,43 +14,47 @@
 </head>
 
 <body>
-        <div id='test'>
-    <div class="navigation">
-        <input type="checkbox" class="navigation__checkbox" id="navi-toggle">
+    <div id='test'>
+        <div class="navigation">
+            <input type="checkbox" class="navigation__checkbox" id="navi-toggle">
 
-        <label for="navi-toggle" class="navigation__button">
-            <span class="navigation__icon">&nbsp;</span>
-        </label>
+            <label for="navi-toggle" class="navigation__button">
+                <span class="navigation__icon">&nbsp;</span>
+            </label>
 
-        <div class="navigation__background">&nbsp;</div>
+            <div class="navigation__background">&nbsp;</div>
 
-        <nav class="navigation__nav">
-            <ul class="navigation__list">
-                <li class="navigation__item"><a href="#" class="navigation__link"><span>01</span>About Natous</a></li>
-                <li class="navigation__item"><a href="#" class="navigation__link"><span>02</span>Your benfits</a></li>
-                <li class="navigation__item"><a href="#" class="navigation__link"><span>03</span>Popular tours</a></li>
-                <li class="navigation__item"><a href="#" class="navigation__link"><span>04</span>Stories</a></li>
-                <li class="navigation__item"><a href="#" class="navigation__link"><span>05</span>Book now</a></li>
-            </ul>
-        </nav>
-    </div>
-
-    <header class="header">
-        <div class="openingScene">
-            <img class="trivia-logo" src="img/trivia.png" width="50%">
-        </div>
-        <div class="header__logo-box">
-            <img src="img/trivia.png" alt="Logo" class="header__logo">
+            <nav class="navigation__nav">
+                <ul class="navigation__list">
+                    <li class="navigation__item"><a href="#" class="navigation__link"><span>01</span>About Natous</a>
+                    </li>
+                    <li class="navigation__item"><a href="#" class="navigation__link"><span>02</span>Your benfits</a>
+                    </li>
+                    <li class="navigation__item"><a href="#" class="navigation__link"><span>03</span>Popular tours</a>
+                    </li>
+                    <li class="navigation__item"><a href="#" class="navigation__link"><span>04</span>Stories</a></li>
+                    <li class="navigation__item"><a href="#" class="navigation__link"><span>05</span>Book now</a></li>
+                </ul>
+            </nav>
         </div>
 
-        <div class="header__text-box">
-            <h1 class="heading-primary">
-                <span class="heading-primary--main">Trivia I Guess?</span>
-                <span class="heading-primary--sub">Don't know don't care</span>
-            </h1>
+        <header class="header">
+            <div class="openingScene">
+                <img class="trivia-logo" src="img/trivia.png" width="50%">
+            </div>
+            <div class="header__logo-box">
+                <img src="img/trivia.png" alt="Logo" class="header__logo">
+            </div>
 
-            <a href="#section-tours" class="btn btn--white btn--animated">How To Play</a>
-        </div>
+            <div class="header__text-box">
+                <h1 class="heading-primary">
+
+                    <span class="heading-primary--main">Trivia I Guess?</span>
+                    <span class="heading-primary--sub">Don't know don't care</span>
+                </h1>
+
+                <a href="#section-tours" class="btn btn--white btn--animated">How To Play</a>
+            </div>
     </div>
     </header>
 
@@ -66,8 +70,8 @@
     <div id="board">
 
     </div>
-<center>
-    <div id="users">
+    <center>
+        <div id="users">
             <table id="users_table">
                 <tr>
                     <th>Username</th>
@@ -119,14 +123,14 @@
                                 <div class="form__group u-margin-bottom-medium">
                                     <form action="/action_page.php" method="get">
                                         <div id="answers">
-                                                    <input type="checkbox" name="vehicle" value="Bike"> First Answer<br>
-                                                    <input type="checkbox" name="vehicle" value="Car" checked> Second
-                                                    Answer<br>
-                                                    <input type="checkbox" name="vehicle" value="Car" checked> Third
-                                                    Answer<br>
-                                                    <input type="checkbox" name="vehicle" value="Car" checked> Fourth
-                                                    Answer<br> <br>
-                                                <a href="#popup" class="btn btn--white">Submit!</a>
+                                            <input type="checkbox" name="vehicle" value="Bike"> First Answer<br>
+                                            <input type="checkbox" name="vehicle" value="Car" checked> Second
+                                            Answer<br>
+                                            <input type="checkbox" name="vehicle" value="Car" checked> Third
+                                            Answer<br>
+                                            <input type="checkbox" name="vehicle" value="Car" checked> Fourth
+                                            Answer<br> <br>
+                                            <a href="#popup" class="btn btn--white">Submit!</a>
                                         </div>
                                     </form>
                                     <br>
@@ -209,7 +213,6 @@
                 </div>
             </div>
         </div>
-
         <script type="text/javascript">
             $(document).ready(function () {
                 var socket = io.connect();
@@ -249,9 +252,9 @@
 
                 socket.on('questions', function (ques, users) {
                     test();
-                    for(let i = 0; i < users.length; i++) {
+                    for (let i = 0; i < users.length; i++) {
                         let wid = (users[i].score);
-                        $('.player'+ (i+1)).animate({ width: wid+ "%" }, 2000);
+                        $('.player' + (i + 1)).animate({ width: wid + "%" }, 2000);
 
 
 
@@ -274,7 +277,7 @@
             }
 
         </script>
-    
+
 
 </body>
 
