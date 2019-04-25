@@ -58,15 +58,8 @@
     </div>
     </header>
 
-    <h1>Trivia Game</h1>
-    <form id="login">
-        <label for="name">
-            <b>Please enter your name:</b>
-        </label>
-        <input required type="text" name="name" value="Username" />
-        <button for="login" type='submit'> ENTER GAME</button>
-    </form>
-    <div id="board">
+
+        <div id="board">
 
     </div>
     <center>
@@ -90,6 +83,39 @@
                 <% } %>
             </table>
         </div>
+        <section class="section-book">
+                <div class="row">
+                        <h1>Trivia Game</h1>
+                        <form id="login">
+                            <label for="name">
+                                <b>Please enter your name:</b>
+                            </label>
+                            <input required type="text" name="name" value="Username" />
+                            <button for="login" type='submit'> ENTER GAME</button>
+                        </form>
+                </div>
+            </section>
+        <center>
+            <div id="users">
+                <table id="users_table">
+                    <tr>
+                        <th>Username</th>
+                        <th>Action</th>
+                    </tr>
+                    <% for (var x in users) { %>
+                    <tr id="username">
+                        <%= users[x].name %>
+
+                    </tr>
+                    <tr class="actionbar">
+                        <form class="readybutton">
+                            <input type="hidden" name="ready" value="<%= users[x]._id %>" />
+                            <button for="readybutton" type='submit'> Ready </button>
+                        </form>
+                    </tr>
+                    <% } %>
+                </table>
+            </div>
 
     </center>
     </div>
