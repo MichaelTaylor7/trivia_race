@@ -2475,3 +2475,18 @@ body {
 		width: 90%;
 	}
 }
+
+#answers{
+	color: white;
+	font-size: 250%;
+	display: block;
+    margin: 20px 80px;
+    position: relative;
+	border-radius: 3px;
+	text-align: center;
+}
+
+.row .col-1-of-3 {
+	width: calc((300% - 2 * 6rem) / 3);
+	display: block;
+}
