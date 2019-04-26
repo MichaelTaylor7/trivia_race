@@ -8,12 +8,17 @@
     <title>Trvia Race</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-
+    <script src="indexfile.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.5.1/pixi.min.js"></script>
+    <script src="../static/js/result.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" type="image/png" href="img/favicon.png">
 </head>
 
 <body>
+    <center>
+    <button id ="reset" onclick="reset()">Reset Game</button>
+</center>
     <div id='test'>
         <div class="navigation">
             <input type="checkbox" class="navigation__checkbox" id="navi-toggle">
@@ -45,7 +50,6 @@
             <div class="header__logo-box">
                 <img src="img/trivia.png" alt="Logo" class="header__logo">
             </div>
-
             <div class="header__text-box">
                 <h1 class="heading-primary">
 
@@ -57,17 +61,16 @@
             </div>
     </div>
     </header>
-        <h1>Trivia Game</h1>
-        <form id="login">
-            <label for="name">
-                <b>Please enter your name:</b>
-            </label>
-            <input required type="text" name="name" value="Username" />
-            <button for="login" type='submit'> ENTER GAME</button>
-        </form>
-        <div id="board">
-      </div>
     <center>
+    <form id="login">
+        <label for="name">
+            <b>Please enter your name:</b>
+        </label>
+        <input required type="text" name="name" value="Username" />
+        <button for="login" type='submit'> ENTER GAME</button>
+    </form>
+    <div id="board">
+    </div>
         <div id="users">
             <table id="users_table">
                 <tr>
@@ -79,7 +82,7 @@
                     <%= users[x].name %>
 
                 </tr>
-                <tr class="actionbar">
+                <tr id="actionbar">
                     <form class="readybutton">
                         <input type="hidden" name="ready" value="<%= users[x]._id %>" />
                         <button for="readybutton" type='submit'> Ready </button>
@@ -88,116 +91,147 @@
                 <% } %>
             </table>
 
-        </center>
+    </center>
 
     </div>
 
     <div id='ques'>
 
-        </div>
-    <center>
-        <button><div id="question">Question</div> </button>
-    </center>
+    </div>
 
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    var socket = io.connect();
+    <script type="text/javascript">
+        var socket = io.connect();
+        $(document).ready(function () {
 
-                    $('#login').submit(function (e) {
-                        e.preventDefault();
-                        name = $('#login input').val();
-                        socket.emit("new_user", {
-                            "name": name,
-                        });
-                    });
+            $('#login').submit(function (e) {
+                e.preventDefault();
+                name = $('#login input').val();
+                socket.emit("new_user", {
+                    "name": name,
                 });
 
-                $('.readybutton').submit(function (event) {
-                    event.preventDefault();
-                    ready = event.target['1']['value']
-                    console.log(event.target['1']['value'])
-                    console.log('ready event', ready)
-                    socket.emit("action", ready
-                    );
-                });
-
-          
-
-                $('#question').click(function () {
-                    socket.emit('ques');
-                });
-
-                socket.on('connection_response', function (data) {
-                    console.log('The server says your id is: ' + data.response);
-                    id = data.response;
-                });
-                socket.on('connect_user', function (username) {
-                    $('#login').fadeOut('fast', function () {
-                        $('#body').fadeIn('fast');
-                    });
-                });
-                socket.on('display_update_users', function (username) {
-                    $('#board').append("<p>" + username.response + " has connected.</p>");
-                });
-                socket.on('disconnect_user', function (username) {
-                    $('#board').append("<p>" + username.response + " has disconnected.</p>");
-                });
-
-                socket.on('questions', function (ques, users) {
-                    test();
-                    for (let i = 0; i < users.length; i++) {
-                        let wid = (users[i].score);
-                        $('.player' + (i + 1)).animate({ width: wid + "%" }, 2000);
-
-                    }
-                    console.log(ques.questions.results)
-                    console.log(users)
-                });
-
-                socket.on('question_options', function (ques, answers) {
-                   reveal_questions(ques, answers);
-                });
-                socket.on('update', function (users) {
-                    for (let i = 0; i < users.length; i++) {
-                        let wid = (users[i].score);
-                        $('.player' + (i + 1)).animate({ width: wid + "%" }, 2000);
-
-                    }
-                });
 
             });
 
-            var progress = " <div class=\"main\">\n        <div class=\"progressBar\">\n            <div class=\"title player1Color\">Player 1</div>\n            <div class=\"progress player1\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player2Color\">Player 2</div>\n            <div class=\"progress player2\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player3Color\">Player 3</div>\n            <div class=\"progress player3\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player4Color\">Player 4</div>\n            <div class=\"progress player4\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player5Color\">Player 5</div>\n            <div class=\"progress player5\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n    </div>"
-            function test() {
-                document.getElementById('test').innerHTML = progress
-            }
+            $('.readybutton').submit(function (event) {
+                event.preventDefault();
+                ready = event.target['1']['value']
+                console.log(event.target['1']['value'])
+                console.log('ready event', ready)
+                socket.emit("action", ready
+                );
+            });
 
-            function reveal_questions(ques, answers) {
-               console.log(ques, answers)
-                questions = "<section class=\"section-tours\" id=\"section-tours\">\n    <div class=\"u-center-text u-margin-bottom-big\">\n        <h2 class=\"heading-secondary\">\n            Please answer following questions\n        </h2>\n    </div>\n<div class=\"row\">\n    <div class=\"col-1-of-3\">\n        <div class=\"card\">\n            <div class=\"card__side card__side--front\">\n                <div class=\"card__picture card__picture--2\">\n                    &nbsp;\n                </div>\n                <h4 class=\"card__heading\">\n                    <span class=\"card__heading-span card__heading-span--2\">Question</span>\n                </h4>\n                <div class=\"card__details\">\n                    <ul>\n                        <li>"+ques.question+"</li>\n                    </ul>\n                </div>\n\n            </div>\n            <div class=\"card__side card__side--back card__side--back-2\">\n                <div class=\"card__cta\">\n                    <div class=\"card__price-box\">\n                        <form id=\"player_correct\" >\n                            <div id=\"answers\">\n                                <input type=\"radio\" class=\"answer\" name=\"answer\" value=\""+answers[0]+"\"> "+answers[0]+"<br>\n                                <input type=\"radio\" class=\"answer\" name=\"answer\" value=\""+answers[1]+"\">"+answers[1]+"<br>\n                                <input type=\"radio\" class=\"answer\" name=\"answer\" value=\""+answers[2]+"\"> "+answers[2]+"<br>\n                                <input type=\"radio\" class=\"answer\" name=\"answer\" value=\""+answers[3]+"\">"+answers[3]+"<br><br>\n                                <button id=\"player_correct\" class=\"btn btn--white\" type='submit'>Submit!</button>\n                            </div>\n                        </form>\n                        <br><br>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>"
-                document.getElementById('ques').innerHTML = questions
 
-                $('#player_correct').submit(function (event) {
-                    event.preventDefault();
-                    console.log(event)
-                    answer = $('.answer:checked').val();
-                    console.log("answer is", answer)
-                    socket.emit("answer", answer
-                    );
+            socket.on('connection_response', function (data) {
+                console.log('The server says your id is: ' + data.response);
+                id = data.response;
+            });
+            socket.on('connect_user', function (username) {
+                $('#login').fadeOut('fast', function () {
+                    $('#body').fadeIn('fast');
                 });
-            }
-                // $("#howTo").click(function () {
-                //     $([document.documentElement, document.body]).animate({
-                //         scrollTop: $(".section-features").offset().bottom
-                //     }, 2000);
-                // });
-                $('#howTo').click(function () {
-                    $([document.documentElement, document.body]).animate({
-                        scrollTop: $('.section-features').offset().top
-                    })
-                })
+            });
+            socket.on('display_update_users', function (username) {
+                $('#board').append("<p>" + username.response + " has connected.</p>");
+            });
+            socket.on('disconnect_user', function (username) {
+                $('#board').append("<p>" + username.response + " has disconnected.</p>");
+            });
 
-            </script>
+            socket.on('questions', function (ques, users) {
+                test(users);
+                for (let i = 0; i < users.length; i++) {
+                    let wid = (users[i].score);
+                    $('.player' + (i + 1)).animate({ width: wid + "%" }, 2000);
+
+                }
+                console.log(ques.questions.results)
+                console.log(users)
+            });
+
+            socket.on('question_options', function (ques, answers, users) {
+                for (let i = 0; i < users.length; i++) {
+                    let wid = (users[i].score);
+                    $('.player' + (i + 1)).animate({ width: wid + "%" }, 2000);
+                }
+                reveal_questions(ques, answers);
+
+            });
+            socket.on('update', function (users, correct, right_list) {
+                console.log("should be updating scores")
+                for (let i = 0; i < users.length; i++) {
+                    let wid = (users[i].score);
+                    $('.player' + (i + 1)).animate({ width: wid + "%" }, 2000);
+                    $('.heading-secondary').html("<h1>" + correct + " is the correct answer <br>" + right_list +" got it right!</h1>");
+                }
+            });
+
+            socket.on('end_game', function (users, winner) {
+                for (let i = 0; i < users.length; i++) {
+                    let wid = (users[i].score);
+                    $('.player' + (i + 1)).animate({ width: wid + "%" }, 2000);
+                    console.log("is it coming here?")
+                    var endgame = "<header class=\"header\">\n    <div class=\"openingScene\">\n        <img class=\"trivia-logo\" src=\"img/trivia.png\" width=\"50%\">\n    </div>\n    <div class=\"header__logo-box\">\n        <img src=\"img/trivia.png\" alt=\"Logo\" class=\"header__logo\">\n    </div>\n    <div class=\"header__text-box\">\n        <h1 class=\"heading-primary\">\n\n            <span class=\"heading-primary--main\">Winner " + winner.name + "</span>\n\n        </h1>\n    </div>\n</div>\n</header>"
+
+                    document.getElementById('ques').innerHTML = endgame
+                }
+            });
+
+        });
+        function test(users) {
+            console.log("here are the", users)
+            if (users.length == 1)
+            var progress = " <div class=\"main\">\n        <div class=\"progressBar\">\n            <div class=\"title player1Color\">"+ users[0].name +"</div>\n            <div class=\"progress player1\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player2Color\">Player 2</div>\n            <div class=\"progress player2\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player3Color\">Player 3</div>\n            <div class=\"progress player3\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player4Color\">Player 4</div>\n            <div class=\"progress player4\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player5Color\">Player 5</div>\n            <div class=\"progress player5\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n    </div>"
+            if (users.length == 2)
+            var progress = " <div class=\"main\">\n        <div class=\"progressBar\">\n            <div class=\"title player1Color\">"+ users[0].name +"</div>\n            <div class=\"progress player1\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player2Color\">"+ users[1].name +"</div>\n            <div class=\"progress player2\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player3Color\">Player 3</div>\n            <div class=\"progress player3\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player4Color\">Player 4</div>\n            <div class=\"progress player4\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player5Color\">Player 5</div>\n            <div class=\"progress player5\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n    </div>"
+            if (users.length == 3)
+            var progress = " <div class=\"main\">\n        <div class=\"progressBar\">\n            <div class=\"title player1Color\">"+ users[0].name +"</div>\n            <div class=\"progress player1\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player2Color\">"+ users[1].name +"</div>\n            <div class=\"progress player2\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player3Color\">"+ users[2].name +"</div>\n            <div class=\"progress player3\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player4Color\">Player 4</div>\n            <div class=\"progress player4\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player5Color\">Player 5</div>\n            <div class=\"progress player5\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n    </div>"
+            if (users.length == 4)
+            var progress = " <div class=\"main\">\n        <div class=\"progressBar\">\n            <div class=\"title player1Color\">"+ users[0].name +"</div>\n            <div class=\"progress player1\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player2Color\">"+ users[1].name +"</div>\n            <div class=\"progress player2\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player3Color\">"+ users[2].name +"</div>\n            <div class=\"progress player3\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player4Color\">"+ users[3].name +"</div>\n            <div class=\"progress player4\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player5Color\">Player 5</div>\n            <div class=\"progress player5\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n    </div>"
+            if (users.length == 5)
+            var progress = " <div class=\"main\">\n        <div class=\"progressBar\">\n            <div class=\"title player1Color\">"+ users[0].name +"</div>\n            <div class=\"progress player1\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player2Color\">"+ users[1].name +"</div>\n            <div class=\"progress player2\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player3Color\">"+ users[2].name +"</div>\n            <div class=\"progress player3\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player4Color\">"+ users[3].name +"</div>\n            <div class=\"progress player4\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n        <div class=\"progressBar\">\n            <div class=\"title player5Color\">"+ users[4].name +"</div>\n            <div class=\"progress player5\"></div>\n            <div class=\"progress_value\"></div>\n        </div>\n    </div>"
+
+            document.getElementById('test').innerHTML = progress
+            var question = "    <center>\n        <button>\n            <div id=\"question\">Question</div>\n        </button>\n    </center>"
+            document.getElementById('users').innerHTML = question
+            $('#question').click(function () {
+                socket.emit('ques');
+            });
+        }
+
+        function reveal_questions(ques, answers) {
+            console.log(ques, answers)
+            questions = "<section class=\"section-tours\" id=\"section-tours\">\n    <div class=\"u-center-text u-margin-bottom-big\">\n        <h2 class=\"heading-secondary\">\n            Please answer following questions\n        </h2>\n    </div>\n<div class=\"row\">\n    <div class=\"col-1-of-3\">\n        <div class=\"card\">\n            <div class=\"card__side card__side--front\">\n                <div class=\"card__picture card__picture--2\">\n                    &nbsp;\n                </div>\n                <h4 class=\"card__heading\">\n                    <span class=\"card__heading-span card__heading-span--2\">Question</span>\n                </h4>\n                <div class=\"card__details\">\n                    <ul>\n                        <li>" + ques.question + "</li>\n                    </ul>\n                </div>\n\n            </div>\n            <div class=\"card__side card__side--back card__side--back-2\">\n                <div class=\"card__cta\">\n                    <div class=\"card__price-box\">\n                        <form id=\"player_correct\" >\n                            <div id=\"answers\">\n                                <input type=\"radio\" class=\"answer\" name=\"answer\" value=\"" + answers[0] + "\"> " + answers[0] + "<br>\n                                <input type=\"radio\" class=\"answer\" name=\"answer\" value=\"" + answers[1] + "\">" + answers[1] + "<br>\n                                <input type=\"radio\" class=\"answer\" name=\"answer\" value=\"" + answers[2] + "\"> " + answers[2] + "<br>\n                                <input type=\"radio\" class=\"answer\" name=\"answer\" value=\"" + answers[3] + "\">" + answers[3] + "<br><br>\n                                <button id=\"player_correct\" class=\"btn btn--white\" type='submit'>Submit!</button>\n                            </div>\n                        </form>\n                        <br><br>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>"
+            document.getElementById('ques').innerHTML = questions
+
+            $('#player_correct').submit(function (event) {
+                event.preventDefault();
+                console.log(event)
+                answer = $('.answer:checked').val();
+                console.log("answer is", answer)
+                socket.emit("answer", answer
+                );
+                $('.card__cta').html("<h1> Thank you for answering! </h1>");
+            });
+        }
+
+        function reset(){
+            console.log("reset")
+            socket.emit("reset")
+        }
+        // $("#howTo").click(function () {
+        //     $([document.documentElement, document.body]).animate({
+        //         scrollTop: $(".section-features").offset().bottom
+        //     }, 2000);
+        // });
+        $('#howTo').click(function () {
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $('.section-features').offset().top
+            })
+        })
+
+    </script>
 
 </body>
 

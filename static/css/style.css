@@ -2502,3 +2502,121 @@ body {
         padding: 10rem 0
     }
 }
+
+  #text {
+    margin-top:50%;
+	display: none;
+	top: 30%;
+	z-index: 200;
+	text-align: top;
+  }
+  
+  .text {
+	width: 100%;
+	text-align: center;
+	z-index: 10;
+	text-shadow:
+	 -5px -5px 0 #1a1a1a,  
+	  5px -5px 0 #1a1a1a,
+	  -5px 5px 0 #1a1a1a,
+	   5px 5px 0 #1a1a1a;
+	top: 30%;
+	opacity: 0.9;
+	text-align: top;
+  }
+
+
+
+  .closingScene {
+    background-color: black;
+    width: 100%;
+    height: 95vh;
+    -webkit-animation-name: closing;
+    animation-name: closing;
+    -webkit-animation-duration: 3s;
+    animation-duration: 3s;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards
+}
+.closingText {
+    color: white;
+    font-size: 80px;
+    letter-spacing: 2px;
+    margin-top: 20%;
+    animation-name: closingTextRight;
+    animation-duration: 3s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+.closingLogo {
+    color: white;
+    animation: closingLogo 3s ease-in-out;
+    animation-fill-mode: forwards;
+}
+.closingText {
+    color:white;
+    animation: logoTransition 3s ease-in-out;
+    animation-fill-mode: forward;
+}
+
+@keyframes closingLogo {
+    0% {
+        opacity: .5;
+        transform: translateX(-10rem);
+    }
+    20% {
+        opacity: 1;
+    }
+    70% {
+        transform: translateX(40%);
+    }
+    80% {
+        transform: translateX(35%);
+    }
+    100% {
+        transform: translateZ(20%);
+    }
+}
+
+@keyframes closingTextRight {
+    0% {
+        opacity: 1;
+        transform: translateX(-5rem);
+    }
+    85% {
+        transform: translateX(55%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(50%);
+    }
+}
+@keyframes closing {
+    0% {
+        opacity: 0.5;
+        -webkit-transform: translateZ(5rem);
+        transform: translateZ(5rem)
+    }
+    25% {
+        opacity: 1;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0)
+    }
+    50% {
+        opacity: 1
+    }
+    65% {
+        opacity: .8
+    }
+    75% {
+        opacity: 0.6
+    }
+    85% {
+        opacity: .3
+    }
+    100% {
+        opacity: 0
+    }
+}
